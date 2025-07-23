@@ -14,7 +14,7 @@ int solve(const string& s, int k) {
         mx = max(mx, mp[s[e]]);
 
         if ((e - st + 1) - mx > k) {
-            mp[s[e]]--;
+            mp[s[st]]--;
             st++;
         }
         ans = max(ans, e - st + 1);
