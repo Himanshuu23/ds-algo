@@ -10,7 +10,7 @@ int solve(int n, vector<int> &v, int k) {
     deque<int> dq;
 
     for (int i = 0; i < n; i++) {
-        if (!dq.empty()) dp[i] += max(0, dp[dq.front()]);
+        if (!dq.empty()) dp[i] += max(0, dp[dq.front()]); // skipping the number's sum if it's negative
         while (!dq.empty() && dp[i] >= dp[dq.back()]) dq.pop_back();
         dq.push_back(i);
         if (dq.front() <= i - k) dq.pop_front();

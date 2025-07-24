@@ -11,7 +11,6 @@ int solve(vector<string>& v, int n) {
         string token = v[i];
 
         if (token == "+" || token == "-" || token == "*" || token == "/") {
-            if (st.size() < 2) throw runtime_error("Invalid expression");
 
             int op1 = st.top(); st.pop();
             int op2 = st.top(); st.pop();
