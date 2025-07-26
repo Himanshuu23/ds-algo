@@ -27,12 +27,12 @@ int usingDivideAndConquer(vector<int>& v, int left, int right) {
     return leftCount > rightCount ? leftMajor : rightMajor;
 }
 
-int solve(int n, vector<int>& v) {
-    int target(n / 2), ans(0), ct(0);
+int solve(int n, vector<int>& v) { // Boyer Moore Majority Vote Algorithm
+    int ans(0), ct(0);
     for (int i = 0; i < n; i++) {
         if (ct == 0) {
-            ans = max(ans, v[i]);
-            ct++;
+            ans = v[i];
+            ct = 1;
         } else if (v[i] == ans) ++ct;
         else --ct;
     }
