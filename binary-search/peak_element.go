@@ -40,9 +40,9 @@ func peakElement(array []int) int {
         if ((array[mid] > array[mid+1]) && (array[mid-1] < array[mid])) {
             return mid
         } else if (array[mid+1] > array[mid]) {
-            start++
+            start = mid + 1;
         } else {
-            end--
+            end = mid;
         }
     }
 
