@@ -12,15 +12,22 @@ int main() {
     long t; cin >> t;
     while(t--) {
         int n; cin >> n;
-        vector<int> v(n);
-        for (int i = 0; i < n; i++) cin >> v[i];
-        if (n == 1) { cout << "YES\n"; continue;}
-        int sz((n+1)/2), ct(sz-1), x(v[0]);
-        sort(v.begin(), v.end());
-        if (v[sz] == v[0]) {cout << "YES\n"; continue;}
-        for (int i = v.size() - 1; i >= sz - 1; i--) {if (-1*v[i] <= x) ct--; if(!ct) break;}
-        if (!ct) cout << "YES\n";
-        else cout << "NO\n";
+        vector<int> a(n);
+        for(int i = 0; i < n; ++i) cin >> a[i];
+
+        vector<pair<int, int>> pairs;
+        for(int i = 0; i < n; ++i) pairs.emplace_back(abs(a[i]), i);
+
+        sort(pairs.begin(), pairs.end());
+
+        vector<int> ans(n, 0);
+        for(int i = 0; i <= n / 2; ++i) ans[pairs[i].second] = 1;
+
+        if(ans[0]) {
+            cout << "YES\n";
+        } else {
+            cout << "NO\n";
+        }
     }
 
     return 0;
