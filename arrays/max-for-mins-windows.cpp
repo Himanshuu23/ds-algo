@@ -37,7 +37,7 @@ vector<int> solve(const vector<int>& v, int n) {
     for (int i = n - 1; i >= 1; i--) 
         res[i] = max(res[i], res[i+1]);
     
-    // ⚠️ FIX: ensure exactly n elements are returned
+    // ensure exactly n elements are returned
     vector<int> ans(res.begin() + 1, res.begin() + n + 1);
     return ans;
 }
