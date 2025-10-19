@@ -12,7 +12,7 @@ int main() {
     long t; cin >> t;
     while(t--) {
         ll n; cin >> n;
-        vector<int>v(n);
+        vector<int>v(n+1, 0);
         for (int i = 2; i <= n; i++) v[i] = i;
         for (int i = 2; i <= n; i++) {
             if (v[i] == i) {
