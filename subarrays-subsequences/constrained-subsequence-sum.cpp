@@ -5,6 +5,20 @@
 using namespace std;
 typedef long long ll;
 
+int solveDP(int n, vector<int>& v, int k) { // solution using DP - O(nk)
+    vector<int> dp = v;
+    int mx = INT_MIN;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = max(0, i-k); j < i; j++) {
+            dp[i] = max(dp[i], v[i] + dp[j]);
+            mx = max(dp[i], mx);
+        }
+    }
+
+    return mx;
+}
+
 int solve(int n, vector<int> &v, int k) {
     vector<int> dp = v;
     deque<int> dq;
