@@ -8,6 +8,8 @@ typedef long long ll;
 int solve(const vector<int>& v, int n, int k) {
     int start(0), ans(0), product(1);
 
+    if (k <= 1) return 0;
+
     for (int end = 0; end < n; end++) {
         product *= v[end];
 
