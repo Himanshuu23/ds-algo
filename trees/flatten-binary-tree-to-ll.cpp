@@ -57,3 +57,21 @@ int main() {
 
     return 0;
 }
+/*
+TreeNode* dfs(TreeNode* root) {
+        if (!root) return NULL;
+
+        TreeNode* leftTail = dfs(root->left);
+        TreeNode* rightTail = dfs(root->right);
+
+        if (leftTail) {
+            leftTail->right = root->right;
+            root->right = root->left;
+            root->left = NULL;
+        }
+
+        if (rightTail) return rightTail;
+        if (leftTail) return leftTail;
+        return root;   
+}
+*/
