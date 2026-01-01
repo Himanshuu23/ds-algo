@@ -17,7 +17,7 @@ public:
     }
 };
 
-bool isBST(Node* root, int minVal, int maxVal) {
+bool isBST(Node* root, ll minVal, ll maxVal) {
     if (!root) return true;
     if (root->data <= minVal || root->data >= maxVal) return false;
     return isBST(root->left, minVal, root->data) && isBST(root->right, root->data, maxVal);
@@ -35,7 +35,7 @@ int main() {
     root->right->left = new Node(12);
     root->right->right = new Node(20);
 
-    if (isBST(root, INT_MIN, INT_MAX)) {
+    if (isBST(root, LLONG_MIN, LLONG_MAX)) {
         cout << "YES\n";
     } else {
         cout << "NO\n";
