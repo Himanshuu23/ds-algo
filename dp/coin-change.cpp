@@ -16,7 +16,7 @@ int main() {
         for (int i = 0; i < n; i++) cin >> v[i];
         vector<int> dp(amt+1, INT_MAX);
         dp[0] = 0;
-        for (int i = 0; i <= amt; i++) {
+        for (int i = 1; i <= amt; i++) {
             for (int x : v) {
                 if (i-x>=0) dp[i] = min(dp[i], dp[i-x]+1);
             }
