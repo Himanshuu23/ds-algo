@@ -38,7 +38,7 @@ void solve(int x, int y, int moveNum, vvi& visited, vvi& ans) {
     sort(moves.begin(), moves.end(), [&](pair<int, int>& a, pair<int, int>& b) {
         return getPossiblePositions(a.first, a.second, visited).size() <
                getPossiblePositions(b.first, b.second, visited).size();
-    });
+    }); // sorting using Warnsdorffs rule - position that knight has fewer future moves available visit those first - reduces the chances of deadends - faster
 
     for (auto& move : moves) {
         solve(move.first, move.second, moveNum + 1, visited, ans);
