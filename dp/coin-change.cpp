@@ -18,7 +18,7 @@ int main() {
         dp[0] = 0;
         for (int i = 1; i <= amt; i++) {
             for (int x : v) {
-                if (i-x>=0) dp[i] = min(dp[i], dp[i-x]+1);
+                if (i-x>=0 && dp[i-x] != INT_MAX) dp[i] = min(dp[i], dp[i-x]+1);
             }
         }
         cout << (dp[amt] == INT_MAX ? -1 : dp[amt]) << endl;
