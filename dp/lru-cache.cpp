@@ -13,7 +13,7 @@ class Node {
         prev = next = nullptr;
     }
 };
-
+// before first tail node and after last head node keeping NULL nodes
 class LRUCache {
     int capacity;
     unordered_map<int, Node*> mp;
