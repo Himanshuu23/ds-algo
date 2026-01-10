@@ -28,16 +28,19 @@ int main() {
         col_end--;
         cout << endl;
 
-        for (int col = col_end; col >= col_start; col--) {
+        if (row_start <= row_end) {
+		for (int col = col_end; col >= col_start; col--) {
             cout << matrix[row_end][col] << " ";
         }
         row_end--;
+		}
         cout << endl;
-
+		if (col_start <= col_end) {
         for (int row = row_end; row >= row_start; row--) {
             cout << matrix[row][col_start] << " ";
         }
         col_start++;
+		}
         cout << endl;
     }
 
