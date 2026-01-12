@@ -6,11 +6,10 @@ using namespace std;
 typedef long long ll;
 
 int solve(int n, vector<int> &v) {
-    int ans(0);
-    for (auto num : v) {
-        ans ^= num; 
-    }
-    return ans ^ n;
+	int answer = 0;
+	for (int i = 0; i <= n; i++) answer ^= i;
+	for (auto& num : v) answer ^= num;
+	return answer;
 }
 
 int main() {
