@@ -15,6 +15,19 @@ int solve(int n, vector<int> &v) {
     return sub.size();
 }
 
+// patience sorting - nlogn
+int lengthOfLIS(vector<int>& v) {
+	int n = v.size();
+	vector<int> tails;
+	for (int x : v) {
+		auto it = lower_bound(tails.begin(), tails.end(), x);
+		if (it == tails.end()) tails.push_back(x);
+		else *it = x;
+	}
+
+	return tails.size();
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
