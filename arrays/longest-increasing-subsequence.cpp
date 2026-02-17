@@ -5,16 +5,6 @@
 using namespace std;
 typedef long long ll;
 
-int solve(int n, vector<int> &v) {
-    vector<int>sub;
-    for (int num : v) {
-        auto it = lower_bound(sub.begin(), sub.end(), num);
-        if (it == sub.end()) sub.push_back(num);
-        else *it = num;
-    }
-    return sub.size();
-}
-
 // patience sorting - nlogn
 int lengthOfLIS(vector<int>& v) {
 	int n = v.size();
