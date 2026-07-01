@@ -10,7 +10,7 @@ int solve(int n, vector<int> &v) {
     for (int i = 0; i < n; i++) {
         int prevCurr = curr;
         curr = max(v[i], v[i] + curr);
-        currOp = max(currOp + v[i], prevCurr - v[i] + v[i] * v[i]);
+        currOp = max(currOp + v[i], max(prevCurr, 0) + v[i]*v[i]);
         mx = max({mx, curr, currOp});
     }
     return mx;
