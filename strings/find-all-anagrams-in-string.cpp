@@ -5,6 +5,20 @@
 using namespace std;
 typedef long long ll;
 
+void betterSolution() {
+    string s, t; cin >> s >> t;
+
+    sort(t.begin(), t.end());
+    int pointer = 0;
+    while (pointer < s.size() - t.size() + 1) {
+        string current = s.substr(pointer, t.size());
+        sort(current.begin(), current.end());
+        if (current == t) cout << pointer << " ";
+        pointer++;
+    }
+    cout << '\n';
+}
+
 vector<int> solve(string s, string t) {
     vector<int>ans;
     int sLen(s.length()), tLen(t.length());
