@@ -4,7 +4,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
-
+// Using Booth's Algorithm
 string solve(const string& s) {
     string t = s + s;
     int n = s.length();

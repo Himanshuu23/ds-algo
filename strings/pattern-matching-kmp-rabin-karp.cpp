@@ -24,6 +24,10 @@ vector<int> solve2(const string& text, const string& pattern) {
     int patternHash(0), windowHash(0), highBase(1);
 
     for (int i = 0; i < m - 1; i++) highBase = (highBase * BASE) % MOD;
+    for (int i = 0; i < m; i++) {
+        patternHash = (patternHash * BASE + pattern[i]) % MOD;
+        windowHash = (windowHash * BASE + text[i]) % MOD;
+    }
 
     for (int i = 0; i <= n - m; i++) {
         if (patternHash == windowHash) {
