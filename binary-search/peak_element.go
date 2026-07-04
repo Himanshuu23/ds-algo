@@ -28,7 +28,7 @@ func main() {
 }
 
 func peakElement(array []int) int {
-    start, end := 1, len(array) - 1 // since first & last elements can never be the required solution so excluding them in the search
+    start, end := 1, len(array) - 1
 
     if len(array) == 1 {
         return 0
