@@ -5,7 +5,7 @@
 using namespace std;
 typedef long long ll;
 
-int solve(vector<int>& heights, int n) {
+int solve(vector<int>& heights, int n) { // for each ith index finding all area from prev max than ith element till smaller than ith element but no including that in the window
     stack<int> st;
     int area(0);
     for (int i = 0; i <= n; i++) {
