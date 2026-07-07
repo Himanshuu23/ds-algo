@@ -14,7 +14,7 @@ class Depq {
         idx_map[heap[i]].insert(i);
         idx_map[heap[i]].erase(j);
         idx_map[heap[j]].insert(j);
-        idx_map[heap[j]].erase(j);
+        idx_map[heap[j]].erase(i);
     }
 
     void heapify_up(int i) {
