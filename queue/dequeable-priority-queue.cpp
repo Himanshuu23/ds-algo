@@ -18,8 +18,8 @@ class Depq {
     }
 
     void heapify_up(int i) {
-        int p = (i - 1) / 2;
         while (i > 0) {
+            int p = (i - 1) / 2;
             if (heap[i] > heap[p]) {
                 swap_nodes(i, p);
                 i = p;
