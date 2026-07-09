@@ -67,8 +67,8 @@ int main() {
         node* head = new node(0);
         head->next = new node(1);
         head->next->next = new node(2);
-        head->next->next = new node(3);
-        head->next->next->next = new node(4);
+        head->next->next->next = new node(3);
+        head->next->next->next->next = new node(4);
         display(head);
         head = reverseKGroup(head, 2);
         display(head);

@@ -18,6 +18,28 @@ class node {
     }
 };
 
+
+node* copy(node* head) { // simpler approach using hash map
+    node* temp = head;
+    unordered_map<node*, node*> mp;
+    while (temp) {
+        mp[temp] = new node(temp->data);
+        temp = temp->next;
+    }
+    temp = head;
+    node* newHead = mp[temp], *dummy = new node(-1);
+    dummy->next = mp[temp];
+    while (temp) {
+        newHead->next = temp->next ? mp[temp->next] : nullptr; // to avoid inserting NULL (last node into map) - works but garbage
+        newHead->random = temp->random ? mp[temp->random] : nullptr;
+        temp = temp->next;
+        newHead = newHead->next;
+    }
+
+    return dummy->next;
+}
+
+
 node* solve(node* &head) {
     if (!head) return nullptr;
 
