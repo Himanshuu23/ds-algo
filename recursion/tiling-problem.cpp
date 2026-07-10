@@ -6,8 +6,8 @@ using namespace std;
 typedef long long ll;
 
 ll ways(int n) {
-    if (n == 0 || n == 1) return 1;
-    return ways(n - 1) + ways(n - 2);
+    if (n == 1 || n == 2) return n;
+    return ways(n-2) + ways(n-1);
 }
 
 int main() {
