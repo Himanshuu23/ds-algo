@@ -5,6 +5,25 @@
 using namespace std;
 typedef vector<vector<int>> vvi;
 
+vector<pair<int, int>> answer;
+map<pair<int, int>, bool> visited;
+vector<pair<int, int>> moves = { {2, 1}, {1, 2}, {-1, 2}, {-2, 1},
+               {-2, -1}, {-1, -2}, {1, -2}, {2, -1} };
+
+bool bruteForce(int n, int x, int y, vector<pair<int, int>>& answer) { // solution without warnsdorffs
+    if (x < 0 || y < 0 || x >= n || y >= n || visited[{x, y}]) return false;
+    answer.push_back({x, y});
+    visited[{x,y}] = true;
+    if (answer.size() == n*n) return true;
+    for (auto& [dx, dy] : moves) {
+        if (bruteForce(n, x+dx, y+dy, answer)) return true;
+    }
+    answer.pop_back();
+    visited[{x,y}] = false;
+
+    return false;
+}
+
 vvi knight = { {2, 1}, {1, 2}, {-1, 2}, {-2, 1},
                {-2, -1}, {-1, -2}, {1, -2}, {2, -1} };
 
