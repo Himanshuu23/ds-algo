@@ -17,6 +17,8 @@ public:
     }
 };
 
+// other way -> inorder traversel of BST is a sorted array
+
 bool isBST(Node* root, ll minVal, ll maxVal) {
     if (!root) return true;
     if (root->data <= minVal || root->data >= maxVal) return false;
