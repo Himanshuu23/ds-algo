@@ -17,6 +17,20 @@ public:
     }
 };
 
+
+int heightSolution2(Node* root) {
+    if (!root) return 0;
+    return 1 + max(heightSolution2(root->left), heightSolution2(root->right));
+}
+
+bool check_balancedSolution2(Node* root) {
+    if (!root) return true;
+    if (!check_balancedSolution2(root->left)) return false;
+    if (!check_balancedSolution2(root->right)) return false;
+    if (abs(heightSolution2(root->left) - heightSolution2(root->right)) > 1) return false;
+    return true;
+}
+
 int height(Node* root) {
     if (!root) return 0;
     int left = height(root->left);
