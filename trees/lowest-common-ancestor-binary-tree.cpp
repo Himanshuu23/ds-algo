@@ -17,6 +17,14 @@ public:
     }
 };
 
+Node* justForBST(Node* root, Node* p, Node* q) { // O(h)
+    if (!root) return nullptr;
+    if (root->data > p->data && root->data > q->data) return justForBST(root->left, p, q);
+    if (root->data < p->data && root->data < q->data) return justForBST(root->right, p, q);
+    return root;
+}
+
+
 Node* solve(Node* root, Node* p, Node* q) {
     if (root == nullptr || root == p || root == q) return root;
 
