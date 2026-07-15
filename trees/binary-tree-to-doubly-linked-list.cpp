@@ -25,7 +25,7 @@ void convertToDLL(Node* root, Node*& prev, Node*& head) {
         prev->right = root;
         root->left = prev;    
     }
-    prev = root; // Move prev to current
+    prev = root;
 
     convertToDLL(root->right, prev, head);
 }
@@ -38,7 +38,6 @@ Node* binaryTreeToDLL(Node* root) {
 }
 
 void printDLL(Node* head) {
-    cout << "Doubly Linked List (in-order): ";
     while (head) {
         cout << head->data << " ";
         head = head->right;
