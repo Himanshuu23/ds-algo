@@ -13,6 +13,7 @@ class MaxHeap {
         while (i > 0 && heap[i] > heap[p]) {
             swap(heap[i], heap[p]);
             i = p;
+            p = (i - 1) / 2;
         }
     }
 
