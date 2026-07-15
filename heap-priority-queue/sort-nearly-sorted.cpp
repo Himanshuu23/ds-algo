@@ -51,6 +51,25 @@ public:
     }
 };
 
+void otherSolution() {
+    int n, k; cin >> n >> k;
+    priority_queue<int, vector<int>, greater<>> pq;
+    for (int i = 0; i < n; i++) {
+        int x; cin >> x;
+        if (pq.size() == k+1) {
+            cout << pq.top() << " ";
+            pq.pop();
+        }
+        pq.push(x);
+    }
+
+    while (!pq.empty()) {
+        cout << pq.top() << " ";
+        pq.pop();
+    }
+    cout << '\n';
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
