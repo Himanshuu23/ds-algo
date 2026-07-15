@@ -9,25 +9,23 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    long t; cin >> t;
-    while(t--) {
-        int n, res(0); cin >> n;
-        vector<int> v(n);
-        for (int i = 0; i < n; i++) cin >> v[i];
-        make_heap(v.begin(), v.end(), greater<int>());
-        while (v.size() > 1) {
-            int ct(2), ans(0);
-            while (ct--) {
-                pop_heap(v.begin(), v.end(), greater<int>());
-                res += v.back();
-                ans += v.back();
-                v.pop_back();
-            }
-            v.push_back(ans);
-            pop_heap(v.begin(), v.end(), greater<int>());
+    int T; cin >> T;
+    while (T--) {
+        int n; cin >> n;
+        priority_queue<int, vector<int>, greater<>> pq;
+        for (int i = 0; i < n; i++) {
+            int x; cin >> x;
+            pq.push(x);
         }
 
-        cout << res << endl;
+        int answer = 0;
+        while (pq.size() != 1) {
+            int first = pq.top(); pq.pop();
+            int second = pq.top(); pq.pop();
+            answer += first + second;
+            pq.push(first + second);
+        }
+        cout << answer << '\n';
     }
 
     return 0;
