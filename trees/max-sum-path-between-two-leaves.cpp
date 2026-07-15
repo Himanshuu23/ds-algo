@@ -17,7 +17,7 @@ public:
 int helper(Node* root, int& maxSum) {
     if (!root) return 0;
 
-    // if lead node return its value
+    // if leaf node return its value
     if (!root->left && !root->right) return root->data;
     
     // recursing on left and right
