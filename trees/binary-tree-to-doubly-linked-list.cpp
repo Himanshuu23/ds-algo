@@ -14,28 +14,22 @@ public:
     Node (int val) : data(val), left(nullptr), right(nullptr) {}
 };
 
-// Helper function to perform in-order traversal and build DLL
 void convertToDLL(Node* root, Node*& prev, Node*& head) {
     if (!root) return;
 
-    // Recurse on left subtree
     convertToDLL(root->left, prev, head);
 
-    // Process current node
     if (!prev) {
-        // First node visited (leftmost) becomes head of DLL
         head = root;
     } else {
-        prev->right = root;   // Link previous node to current
-        root->left = prev;    // Link current to previous
+        prev->right = root;
+        root->left = prev;    
     }
     prev = root; // Move prev to current
 
-    // Recurse on right subtree
     convertToDLL(root->right, prev, head);
 }
 
-// Main function to call from driver
 Node* binaryTreeToDLL(Node* root) {
     Node* head = nullptr;
     Node* prev = nullptr;
@@ -43,7 +37,6 @@ Node* binaryTreeToDLL(Node* root) {
     return head;
 }
 
-// Utility function to print the DLL
 void printDLL(Node* head) {
     cout << "Doubly Linked List (in-order): ";
     while (head) {
