@@ -52,6 +52,21 @@ public:
     }
 };
 
+void otherSolution() {
+    int n, k; cin >> n >> k;
+    priority_queue<int, vector<int>, greater<>> pq;
+    for (int i = 0; i < n; i++) {
+        int x; cin >> x;
+        pq.push(x);
+    }
+
+    while (--k) { // pop k-1 times
+        pq.pop();
+    }
+
+    cout << pq.top() << '\n';
+}
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
