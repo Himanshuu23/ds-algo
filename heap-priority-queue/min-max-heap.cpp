@@ -18,7 +18,7 @@ class MaxHeap {
 
     void heapify_down(int i) {
         int n = heap.size();
-        while (2 * i + 1) {
+        while (2 * i + 1 < n) {
             int left = 2 * i + 1, right = 2 * i + 2, largest = i;
             if (left < n && heap[left] > heap[largest]) largest = left;
             if (right < n && heap[right] > heap[largest]) largest = right;
