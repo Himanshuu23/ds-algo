@@ -5,6 +5,13 @@
 using namespace std;
 typedef long long ll;
 
+/*
+DFS/BFS: O(V + E) — each vertex visited once, each edge examined once (twice total across both directions in an undirected graph, still O(E)).
+DSU: O(E · α(V)) for all the unite() calls (one per edge) + O(V · α(V)) for the final find() pass over all vertices ≈ O((V+E) · α(V)), which is practically O(V+E) since α is essentially constant.
+in findIslands problem we did O(E) = 4V and did complexity for dsu O(V) here we can't do that because in there we had grid so 
+each element could max have 4 neighbours atmost but here that isn't the case.
+*/
+
 class DSU {
     vector<int> parent, rank_;
     public:
