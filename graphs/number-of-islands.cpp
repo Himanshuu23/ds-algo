@@ -5,6 +5,73 @@
 using namespace std;
 typedef long long ll;
 
+class DSU {
+public:
+    vector<int> parent, rank_;
+    
+    DSU (int n) {
+        parent.resize(n);
+        rank_.assign(n, 0);
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+    }
+
+    int find(int x) {
+        if (parent[x] != x) {
+            parent[x] = find(parent[x]);
+        }
+
+        return parent[x];
+    }
+
+    void unite(int x, int y) {
+        int rootX = find(x), rootY = find(y);
+
+        if (rootX == rootY) {
+            return;
+        }
+
+        if (rank_[rootX] < rank_[rootY]) swap(rootX, rootY);
+        parent[rootY] = rootX;
+        if (rank_[rootX] == rank_[rootY]) rank_[rootX]++;
+    }
+};
+
+int numIslandsDSU(vector<vector<int>>& grid) {
+    int n = grid.size(), m = grid[0].size();
+    DSU dsu(n*m);
+
+    auto idx = [m](int i, int j) {
+        return i * m + j;
+    };
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (grid[i][j] != 1) continue;
+
+            if (j + 1 < m && grid[i][j+1] == 1) {
+                dsu.unite(idx(i, j), idx(i, j+1));
+            }
+
+            if (i + 1 < n && grid[i+1][j] == 1) {
+                dsu.unite(idx(i, j), idx(i+1, j));
+            }
+        }
+    }
+
+    set<int> islands;
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            if (grid[i][j] == 1) {
+                islands.insert(dsu.find(idx(i, j)));
+            }
+        }
+    }
+
+    return islands.size();
+}
+
 void dfs(int i, int j, vector<vector<char>>& grid, vector<vector<bool>>& visited) {
     int n = grid.size(), m = grid[0].size();
     visited[i][j] = true;

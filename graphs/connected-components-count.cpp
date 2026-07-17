@@ -5,6 +5,8 @@
 using namespace std;
 typedef long long ll;
 
+// REMIND ME TO LEARN DSUs AND IMPELEMENT THE SOLUTION USING THAT 
+
 void dfs(int node, const vector<vector<int>>& adj, vector<bool>& visited) {
     visited[node] = true;
     for (int neighbor : adj[node]) {
