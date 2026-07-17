@@ -5,6 +5,22 @@
 using namespace std;
 typedef long long ll;
 
+/*
+time complexity:
+for bfs/dfs its O(V+E) since each element/vertex is traversed only once (ensured by visited) - dfs call
+and we do this O(E) dfs call for each vertice but since if in first call we marked many nodes already visited
+we could never call those again always skipped so O(E+V)
+
+also in a grid, node can have atmost 4 neighbours so E = 4V -> E = O(V)
+
+for DSU -> O(Va(V) -> O(V)
+since according to Tarjan m operations on n elements = O(ma(n))
+here we're doing find() -> O(logn) since on each element finding its parent and in DSU, we're precalculating the parent of future calls and max rank that a root can have is log(n) since rank only increases when a tree of equal length is attached to the root, unite() -> O(E) since on each edge
+Hence, total operations m = O(E) + O(V) on n*m elements -> total vertices O(V)
+O(E) + O(V) = O(V) + O(4V) = O(V)
+using Tarjan's, O(Va(V)) = O(V)
+*/
+
 class DSU {
 public:
     vector<int> parent, rank_;

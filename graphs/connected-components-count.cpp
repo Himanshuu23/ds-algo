@@ -5,7 +5,50 @@
 using namespace std;
 typedef long long ll;
 
-// REMIND ME TO LEARN DSUs AND IMPELEMENT THE SOLUTION USING THAT 
+class DSU {
+    vector<int> parent, rank_;
+    public:
+        DSU(int n) {
+           parent.resize(n);
+           rank_.assign(n, 0);
+           for (int i = 0; i < n; i++) parent[i] = i;
+        }
+
+        int find(int x) {
+            if (parent[x] != x) {
+                parent[x] = find(parent[x]);
+            }
+
+            return parent[x];
+        }
+
+        void unite(int x, int y) {
+            int rootX = find(x), rootY = find(y);
+
+            if (rootX == rootY) return;
+            if (rank_[rootX] < rank_[rootY]) swap(rootX, rootY);
+            parent[rootY] = rootX;
+            if (rank_[rootX] == rank_[rootY]) rank_[rootX]++;
+        }
+};
+
+int findConnectedComponentsUsingDSU(vector<vector<int>>& adj) {
+    int V = adj.size();
+    DSU dsu(V);
+
+    for (int i = 0; i < V; i++) {
+        for (int neighbour : adj[i]) {
+            dsu.unite(i, neighbour);
+        }
+    }
+
+    set<int> daddy;
+    for (int i = 0; i < V; i++) {
+        daddy.insert(dsu.find(i));
+    }
+
+    return daddy.size();
+}
 
 void dfs(int node, const vector<vector<int>>& adj, vector<bool>& visited) {
     visited[node] = true;
@@ -80,6 +123,8 @@ int main() {
 
         int result_bfs = bfsCountConnectedComponents(V, adj);
         cout << "BFS: Number of connected components: " << result_bfs << endl;
+
+        cout << findConnectedComponentsUsingDSU(adj) << 'n';
     }
 
     return 0;
