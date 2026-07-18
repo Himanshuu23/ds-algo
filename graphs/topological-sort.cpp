@@ -6,10 +6,10 @@ using namespace std;
 typedef long long ll;
 
 // Topological Sort of DAG - using Kahan algo and dfs
-// Using Kahan's Algorithm - detects Cycles too!
+// Using Kahn's Algorithm - detects Cycles too!
 // count in-degrees, push all 0 in-degrees to the queue and remove them one by one and reduce in-degree of their neighbors, if some nodes remain unprocessed - there's a cycle.
 
-vector<int> kahan(int n, vector<vector<int>>& adj) {
+vector<int> kahn(int n, vector<vector<int>>& adj) {
     vector<int> inDegree(n, 0);
     for (auto& neighbors : adj)
         for (int v : neighbors) inDegree[v]++;
