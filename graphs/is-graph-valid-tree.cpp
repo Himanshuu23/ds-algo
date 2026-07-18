@@ -6,46 +6,64 @@ using namespace std;
 typedef long long ll;
 
 // approach - union-find --> if any edge, connect two nodes in the same set -> cycle. After processing all edges, check if there's exactly one connected component
+/*
+conditions for graph to be tree :- 
+(1) every node is connected and can be reached from some other node
+(2) No cycles 
+(3) n nodes -> exactly n-1 edges
+tree = connected acyclic graph
+*/
 
-int find(int u, vector<int>& parent) {
-    if (parent[u] != u) parent[u] = find(parent[u], parent);
-    return parent[u];
-}
+class DSU {
+    public: 
+        vector<int> parent, rank_;
+        DSU(int n) {
+            parent.resize(n);
+            rank_.assign(n, 0);
+            for (int i = 0; i < n; i++) parent[i] = i;
+        }
 
-bool unionSets(int u, int v, vector<int>& parent) {
-    int pu = find(u, parent);
-    int pv = find(v, parent);
-    if (pu == pv) return false;
-    parent[pu] = pv;
-    return true;
-}
+        int find (int x) {
+            if (parent[x] != x)
+                parent[x] = find(parent[x]);
+            return parent[x];
+        }
 
-bool solve(int n, vector<vector<int>>& edges) {
-    if (edges.size() != n - 1) return false;
+        void unite(int x, int y) {
+            int parentX = find(x), parentY = find(y);
+            if (parentX == parentY) return;
 
-    vector<int> parent(n);
-    for (int i = 0; i < n; i++) parent[i] = i;
-    for (auto& edge : edges) {
-        if (!unionSets(edge[0], edge[1], parent)) return false;
-    }
+            if (rank_[parentX] < rank_[parentY]) swap(parentX, parentY);
+            parent[parentY] = parentX;
+            if (rank_[parentX] == rank_[parentY]) rank_[parentX]++;
+        }
 
-    return true;
-}
+        bool hasCycle(int u, int v) {
+            int parentU = find(u), parentV = find(v);
+            if (parentU == parentV) return true;
+            unite(parentU, parentV);
+            return false;
+        }
+};
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    long t; cin >> t;
-    while(t--) {
-        int n, m; cin >> n >> m;
-        vector<vector<int>> edges(m);
-        for (int i = 0; i < m; i++) {
+    int T; cin >> T;
+    while (T--) {
+        int V, E; cin >> V >> E;
+        DSU dsu(V);
+        bool isTree = true;
+        for (int i = 0; i < E; i++) {
             int u, v; cin >> u >> v;
-            edges[i] = {u, v};
-        }
+            if (dsu.hasCycle(u, v))
+                isTree = false;
+        } 
 
-        cout << ((solve(n, edges)) ? "Yes" : "No") << endl;
+        if (E != V - 1) isTree = false;
+
+        cout << isTree << '\n';
     }
 
     return 0;
