@@ -5,19 +5,37 @@
 using namespace std;
 typedef long long ll;
 
-vector<int> parent;
+class DSU {
+    public:
+        vector<int> parent, rank_;
+        DSU(int n) {
+            parent.resize(n);
+            rank_.assign(n, 0);
+            for (int i = 0; i < n; i++) parent[i] = i;
+        }
 
-int find(int x) {
-    if (parent[x] != x) parent[x] = find(parent[x]);
-    return parent[x];
-}
+        int find(int x) {
+            if (parent[x] != x) {
+                parent[x] = find(parent[x]);
+            }
+            return parent[x];
+        }
 
-bool unionSets(int u, int v) {
-    int pu = find(u), pv = find(v);
-    if (pu == pv) return true;
-    parent[pu] = parent[pv];
-    return false;
-}
+        void unite(int x, int y) {
+            int rootX = find(x), rootY = find(y);
+            if (rootX == rootY) return;
+            if (rank_[rootX] < rank_[rootY]) swap(rootX, rootY);
+            parent[rootY] = rootX;
+            if (rank_[rootX] == rank_[rootY]) rank_[rootX]++;
+        }
+
+        bool detectCycle(int u, int v) {
+            int pu = find(u), pv = find(v);
+            if (pu == pv) return true;
+            unite(pu, pv);
+            return false;
+        }
+};
 
 int main() {
     ios::sync_with_stdio(false);
@@ -29,18 +47,13 @@ int main() {
         int V, E;
         cin >> V >> E;
 
-        parent.resize(V);
-        for (int i = 0; i < V; ++i)
-            parent[i] = i;
-
+        DSU dsu(V);
         bool hasCycle = false;
         for (int i = 0; i < E; ++i) {
-            int u, v;
-            cin >> u >> v;
+            int u, v; cin >> u >> v;
 
-            if (unionSets(u, v)) {
+            if (dsu.detectCycle(u, v)) {
                 hasCycle = true;
-                break;
             }
         }
 
