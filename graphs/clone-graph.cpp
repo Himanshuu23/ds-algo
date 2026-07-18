@@ -1,76 +1,50 @@
-/*
-    author: Himanshuu23
-*/
-#include <bits/stdc++.h>
-#include <unordered_map>
+/
+#include <bits/stdc++.h> 
 using namespace std;
-typedef long long ll;
-
-// approach - DFS --> using a hash map to track already created cloned nodes, recurse into each neighbor and clone them.
 
 class Node {
-public:
-    int val;
-    vector<Node*> neighbors;
+    public:
+        int value;
+        vector<Node*> neighbours;
 
-    Node() : val(0), neighbors({}) {}
-    Node(int _val) : val(_val), neighbors({}) {}
-    Node(int _val, vector<Node*> _neighbors) : val(_val), neighbors(_neighbors) {}
-};
-
-class Solution {
-    unordered_map<Node*, Node*> cloned;
-
-public:
-    Node* cloneGraph(Node* node) {
-        if (!node) return nullptr;
-
-        if (cloned.count(node)) return cloned[node];
-
-        Node* copy = new Node(node->val);
-        cloned[node] = copy;
-
-        for (Node* neighbor : node->neighbors)
-            copy->neighbors.push_back(cloneGraph(neighbor));
-
-        return copy;
-    }
-};
-
-Node* buildGraph() {
-    int n; cin >> n;
-    vector<Node*> nodes(n + 1, nullptr);
-
-    for (int i = 1; i <= n; i++) nodes[i] = new Node(i);
-
-    for (int i = 1; i <= n; i++) {
-        int k; cin >> k;
-        for (int j = 0; j < k; j++) {
-            int neighborVal; cin >> neighborVal;
-            nodes[i]->neighbors.push_back(nodes[neighborVal]);
+        Node (int value) {
+            this->value = value;
         }
+};
+
+unordered_map<Node*, Node*> cloned;
+Node* clone(Node* node) {
+    if (!node) return nullptr;
+    if (cloned.count(node)) return cloned[node];
+
+    Node* copy = new Node(node->value);
+    cloned[node] = copy;
+
+    for (Node* neighbour : node->neighbours) {
+        copy->neighbours.push_back(clone(neighbour));
     }
 
-    return nodes[1];
+    return copy;
 }
 
-void printGraph(Node* node) {
+// printing bfs of cloned graph
+void bfs(Node* start) {
     unordered_set<Node*> visited;
     queue<Node*> q;
-    q.push(node);
-    visited.insert(node);
+    q.push(start);
+    visited.insert(start);
 
     while (!q.empty()) {
-        Node* curr = q.front(); q.pop();
-        cout << "Node " << curr->val << ": ";
-        for (Node* nbr : curr->neighbors) {
-            cout << nbr->val << " ";
-            if (!visited.count(nbr)) {
-                visited.insert(nbr);
-                q.push(nbr);
+        Node* node = q.front(); q.pop();
+        cout << node->value << " -> ";
+        for (Node* neighbour : node->neighbours) {
+            cout << neighbour->value << " ";
+            if (!visited.count(neighbour)) {
+                q.push(neighbour);
+                visited.insert(neighbour);
             }
         }
-        cout << endl;
+        cout << '\n';
     }
 }
 
@@ -78,13 +52,26 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    long t; cin >> t;
-    while(t--) {
-        Node* start = buildGraph();
-        Solution sol;
-        Node* cloned = sol.cloneGraph(start);
-        printGraph(cloned);
+    int T; cin >> T;
+    while (T--) {
+        int n; cin >> n;
+        vector<Node*> nodes(n+1, nullptr);
+        for (int i = 1; i <= n; i++) nodes[i] = new Node(i);
+
+        // building the graph
+        for (int i = 1; i <= n; i++) {
+            Node* node = nodes[i];
+            int k; cin >> k;
+            for (int j = 0; j < k; j++) {
+                int value; cin >> value;
+                node->neighbours.push_back(nodes[value]); 
+            }
+        }
+        cloned.clear();
+        Node* copy = clone(nodes[1]);
+        bfs(copy);
     }
 
     return 0;
 }
+
