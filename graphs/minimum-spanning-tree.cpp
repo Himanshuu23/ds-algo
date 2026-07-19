@@ -5,7 +5,7 @@
 using namespace std;
 typedef long long ll;
 
-// using Kruskal's Algo - sort edges by weight, pick smallest edge that doesn't form a cyle - Union-Find approach
+// using Kruskal's Algo - sort edges by weight, pick smallest edge that doesn't form a cyle - Union-Find approach - O(ElogE)
 
 int find(int u, vector<int>& parent) {
     return parent[u] == u ? u : parent[u] = find(parent[u], parent);
@@ -35,7 +35,7 @@ int kruskal(int n, vector<tuple<int, int, int>>& edges) {
     return (count == n - 1) ? cost : -1;
 }
 
-// using Prim's - start from any node, always pick the smallest edge that connects to unvisited node - min heap
+// using Prim's - start from any node, always pick the smallest edge that connects to unvisited node - min heap - O(ElogV)
 
 int prim(int n, vector<vector<pair<int, int>>>& adj) {
     vector<bool> visited(n, false);
