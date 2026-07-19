@@ -8,6 +8,7 @@ typedef long long ll;
 // Spanning Tree -> contains V vertices but V-1 edges, its a tree so no cycle must be present and from one node we can go to any other node as well
 // Total Spanning Tree Possible for a graph = [E C (V-1)] - number of cycles, C -> combinations
 // using Kruskal's Algo - sort edges by weight, pick smallest edge that doesn't form a cyle - Union-Find approach - O(ElogE)
+// if we apply Kruskal on non-connected graphs - then it returns spanning tree for each not connected component
 
 int find(int u, vector<int>& parent) {
     return parent[u] == u ? u : parent[u] = find(parent[u], parent);
