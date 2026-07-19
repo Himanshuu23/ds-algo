@@ -6,7 +6,7 @@ using namespace std;
 typedef long long ll;
 
 // Dijkstra - directed + undirected, no negative cycles though -> O(V+E)logV
-// Bellman Ford - can be used for negative weights as well and detects negative cycles -> O(V.E)
+// Bellman Ford - can be used for negative weights as well and detects negative cycles -> O(V.E) -> and in the complete graph say we have n vertices then O(n2) generally but complete graph means every node connected to each other so total edges n(n-1)/2 hence it becomes O(n3). Also bellman ford works for negative weights but if there is a cycle with negative weight then it would keep running even after (n-1) times so never terminates.
 // Kahn - topological sort + dp - works for DAGs, also handles negative weights! just not cycles -> O(V+E)
 
 vector<int> dijkstra(int n, vector<vector<pair<int, int>>>& adj, int src) {
