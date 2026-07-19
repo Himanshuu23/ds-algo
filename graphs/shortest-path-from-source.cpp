@@ -7,6 +7,7 @@ typedef long long ll;
 
 // Dijkstra - directed + undirected, no negative cycles though -> O(V+E)logV
 // Bellman Ford - can be used for negative weights as well and detects negative cycles -> O(V.E)
+// Kahn - topological sort + dp - works for DAGs, also handles negative weights! just not cycles -> O(V+E)
 
 vector<int> dijkstra(int n, vector<vector<pair<int, int>>>& adj, int src) {
     vector<int> dist(n, INT_MAX);
@@ -42,6 +43,50 @@ vector<int> bellmanFord(int n, vector<tuple<int, int, int>>& edges, int src) {
     for (auto& [u, v, w] : edges) 
         if (dist[u] != INT_MAX && dist[u] + w < dist[v]) throw runtime_error("Negative weight cycle detected!");
     return dist;
+}
+
+vector<int> kahn(int V, vector<vector<pair<int, int>>>& adj) {
+    vector<int> inDegree(V, 0);
+    for (int i = 0; i < V; i++) {
+        for (auto& [v,w]: adj[i]) inDegree[v]++;
+    }
+
+    queue<int> q;
+    for (int i = 0; i < V; i++) {
+        if (inDegree[i] == 0) q.push(i);
+    }
+
+    vector<int> topological;
+    while (!q.empty()) {
+        int u = q.front(); q.pop();
+        topological.push_back(u);
+        for (auto [v, w] : adj[u]) {
+            if (--inDegree[v] == 0) q.push(v);
+        }
+    }
+
+    if (topological.size() != V) return {};
+
+    return topological;
+}
+
+void shortestPathKahn(vector<vector<pair<int, int>>>& adj, int source) {
+    int V = adj.size();
+    vector<int> topological = kahn(V, adj);
+
+    vector<int> distance(V, INT_MIN);
+    distance[source] = 0;
+    for (int u : topological) {
+        if (distance[u] != INT_MIN) {
+            for (auto [v, w] : adj[u]) {
+                if (distance[v] > distance[u] + w) distance[v] = distance[u] + w;
+            }
+        }
+    }
+
+    for (int i = 0; i < V; i++) {
+        cout << "Shortest Distance from source to " << i << " -> " << (distance[i] == INT_MIN ? -1 : distance[i]) << '\n';
+    }
 }
 
 int main() {
