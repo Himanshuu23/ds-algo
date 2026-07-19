@@ -5,7 +5,7 @@
 using namespace std;
 typedef long long ll;
 
-vector<vector<int>> floydWarshall(int n, vector<tuple<int, int, int>>& edges) {
+vector<vector<int>> floydWarshall(int n, vector<tuple<int, int, int>>& edges) { // O(V3)
     vector<vector<int>> dist(n, vector<int>(n, INT_MAX));
     
     for (int i = 0; i < n; i++) dist[i][i] = 0;
@@ -19,6 +19,22 @@ vector<vector<int>> floydWarshall(int n, vector<tuple<int, int, int>>& edges) {
     
     return dist;
 }
+
+vector<vector<int>> bellmanford(int n, vector<tuple<int, int, int>>& adj) { // O(V2E)
+	vector<vector<int>> answer(n, vector<int> (n, INT_MAX));
+
+	for (int source = 0; source < n; source++) {
+		answer[source][source] = 0;
+		for (int i = 1; i < n; i++) {
+			for (auto& [u, v, w] : adj) {
+				if (answer[source][u] != INT_MAX && answer[source][v] > answer[source][u] + w) answer[source][v] = answer[source][u] + w;
+			}
+		}
+	}
+
+	return answer;
+}
+
 
 int main() {
     ios::sync_with_stdio(false);
