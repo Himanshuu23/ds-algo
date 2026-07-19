@@ -5,6 +5,8 @@
 using namespace std;
 typedef long long ll;
 
+// Spanning Tree -> contains V vertices but V-1 edges, its a tree so no cycle must be present and from one node we can go to any other node as well
+// Total Spanning Tree Possible for a graph = [E C (V-1)] - number of cycles, C -> combinations
 // using Kruskal's Algo - sort edges by weight, pick smallest edge that doesn't form a cyle - Union-Find approach - O(ElogE)
 
 int find(int u, vector<int>& parent) {
