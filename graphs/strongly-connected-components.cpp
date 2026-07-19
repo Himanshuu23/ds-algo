@@ -52,48 +52,49 @@ void kosaraju(int V, vector<vector<int>>& graph) {
 }
 
 // Tarjan's Algorithm (Single DFS) - Uses low-link values: smallest vertex id reachable from the subtree rooted at that node.
-// Maintains a stack of visited nodes and a desc[] and low[] array. Whenever disc[u] == low[u], it's head nodes of an SCC
+// Maintains a stack of visited nodes and a id[] and low[] array. Whenever id[u] == low[u], it's head nodes of an SCC
 // O(V + E)
+
 int timer = 0;
 
-void tarjanDFS(int u, vector<vector<int>>& graph, vector<int>& disc, vector<int>& low, stack<int>& st, vector<bool>& inStack, vector<vector<int>>& SCCs) {
-    disc[u] = low[u] = timer++;
-    st.push(u);
-    inStack[u] = true;
+void dfs(int node, vector<vector<int>>& graph, vector<int>& id, vector<int>& low, stack<int>& st, vector<bool>& inStack, vector<vector<int>>& SCCs) {
+	id[node] = low[node] = timer++;
+	st.push(node);
+	inStack[node] = true;
 
-    for (int v : graph[u]) {
-        if (disc[v] == -1) {
-            tarjanDFS(v, graph, disc, low, st, inStack, SCCs);
-            low[u] = min(low[u], low[v]);
-        } else if (inStack[v]) low[u] = min(low[u], disc[v]);
-    }
+	for (int v : graph[node]) {
+		if (id[v] == -1) {
+			dfs(v, graph, id, low, st, inStack, SCCs);
+			low[node] = min(low[node], low[v]);
+		} else if (inStack[v]) low[node] = min(low[node], id[v]);	
+	}
 
-    if (disc[u] == low[u]) {
-        vector<int> component;
-        int v;
-        do {
-            v = st.top(); st.pop();
-            inStack[v] = false;
-            component.push_back(v);
-        } while (u != v);
-        SCCs.push_back(component);
-    }
+	if (id[node] == low[node]) {
+		vector<int> component;
+		int v;
+		do {
+			v = st.top(); st.pop();
+			inStack[v] = false;
+			component.push_back(v);
+		} while (node != v);
+		SCCs.push_back(component);
+	}
 }
 
 void tarjan(int V, vector<vector<int>>& graph) {
-    vector<int> disc(V, -1), low(V, -1);
-    vector<bool> inStack(V, false);
-    stack<int> st;
-    vector<vector<int>> SCCs;
+	vector<int> id(V, -1), low(V, -1);
+	vector<bool> inStack(V, false);
+	stack<int> st;
+	vector<vector<int>> SCCs;
 
-    for (int i = 0; i < V; i++)
-        if (disc[i] == -1) tarjanDFS(i, graph, disc, low, st, inStack, SCCs);
+	for (int i = 0; i < V; i++) {
+		if (id[i] == -1) dfs(i, graph, id, low, st, inStack, SCCs);
+	}
 
-    cout << "Strongly Connected Components:\n";
-    for (auto &component : SCCs) {
-        for (int v : component) cout << v << " ";
-        cout << endl;
-    }
+	for (auto& component : SCCs) {
+		for (int v : component) cout << v << " ";
+		cout << '\n';
+	}
 }
 
 int main() {
