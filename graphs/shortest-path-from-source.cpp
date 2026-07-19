@@ -5,7 +5,8 @@
 using namespace std;
 typedef long long ll;
 
-// Dijkstra - directed + undirected, no negative cycles though -> (V+E)logV --> 
+// Dijkstra - directed + undirected, no negative cycles though -> O(V+E)logV
+// Bellman Ford - can be used for negative weights as well and detects negative cycles -> O(V.E)
 
 vector<int> dijkstra(int n, vector<vector<pair<int, int>>>& adj, int src) {
     vector<int> dist(n, INT_MAX);
