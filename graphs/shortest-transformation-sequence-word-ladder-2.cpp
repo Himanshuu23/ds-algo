@@ -5,6 +5,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// O(N2*L)
 bool unitDifference(string& first, string& second) {
 	int count = 0;
 	if (first.size() != second.size()) return false;
@@ -56,7 +57,7 @@ void dfs2(int node, vector<vector<int>>& graph, vector<int>& distance, vector<ve
 	current.pop_back();
 }
 
-// better solution
+// better solution - O(N*L*26)
 void dfs(string word, string beginWord, unordered_map<string, vector<string>>& parentMap,
          vector<string>& path, vector<vector<string>>& result) {
     if (word == beginWord) {
