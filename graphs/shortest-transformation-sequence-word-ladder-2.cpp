@@ -5,6 +5,58 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+bool unitDifference(string& first, string& second) {
+	int count = 0;
+	if (first.size() != second.size()) return false;
+	for (int i = 0; i < first.size(); i++) {
+		if (first[i] != second[i]) count++;
+	}
+
+	return count == 1;
+}
+
+void buildGraph(vector<string>& wordList, vector<vector<int>>& graph) {
+	int n = wordList.size();
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			if (unitDifference(wordList[i], wordList[j])) graph[i].push_back(j);
+		}
+	}
+}
+
+vector<int> bfs2(int n, int begin, int end, vector<vector<int>>& graph) {
+	vector<int> distance(n, INT_MAX);
+	queue<int> q;
+	q.push(begin);
+	distance[begin] = 0;
+	while (!q.empty()) {
+		int node = q.front(); q.pop();
+		if (node == end) break;
+		for (int neighbour : graph[node]) {
+			if (distance[neighbour] == INT_MAX) {
+				distance[neighbour] = distance[node] + 1;
+				q.push(neighbour);
+			}
+		}
+	}
+
+	return distance;
+}
+
+void dfs2(int node, vector<vector<int>>& graph, vector<int>& distance, vector<vector<string>>& answer, vector<string>& current, int end, vector<string>& wordList) {
+	current.push_back(wordList[node]);
+	if (node == end) {
+		answer.push_back(current);
+	} else {
+		for (int neighbour : graph[node]) {
+			if (distance[neighbour] == distance[node] + 1)
+				dfs2(neighbour, graph, distance, answer, current, end, wordList);
+		}
+	}
+	current.pop_back();
+}
+
+// better solution
 void dfs(string word, string beginWord, unordered_map<string, vector<string>>& parentMap,
          vector<string>& path, vector<vector<string>>& result) {
     if (word == beginWord) {
