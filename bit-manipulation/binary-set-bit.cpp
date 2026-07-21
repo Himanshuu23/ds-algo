@@ -21,7 +21,7 @@ int main() {
     long t; cin >> t;
     while(t--) {
         string bin; cin >> bin;
-        int n = stoi(bin);
+        int n = stoi(bin, 0, 2); // parses string in binary
         cout << solve(n) << endl;
     }
 
