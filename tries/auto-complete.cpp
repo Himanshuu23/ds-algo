@@ -4,7 +4,7 @@ using namespace std;
 class TrieNode {
     public:
     unordered_map<char, TrieNode*> mp;
-    bool endOfWord;
+    bool endOfWord = false;
 };
 
 class Trie {
