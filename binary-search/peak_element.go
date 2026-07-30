@@ -28,23 +28,14 @@ func main() {
 }
 
 func peakElement(array []int) int {
-    start, end := 1, len(array) - 1
-
-    if len(array) == 1 {
-        return 0
-    }
-
-    for start <= end {
-        mid := (start + end) / 2
-
-        if ((array[mid] > array[mid+1]) && (array[mid-1] < array[mid])) {
-            return mid
-        } else if (array[mid+1] > array[mid]) {
-            start = mid + 1;
-        } else {
-            end = mid;
-        }
-    }
-
-    return -1
+	start, end := 0, len(array)-1
+	for start < end {
+    	mid := (start + end) / 2
+    	if array[mid] > array[mid+1] {
+        	end = mid
+    	} else {
+        	start = mid + 1
+    	}
+	}
+	return start
 }
