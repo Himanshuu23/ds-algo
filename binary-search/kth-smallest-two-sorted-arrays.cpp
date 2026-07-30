@@ -8,7 +8,7 @@ typedef long long ll;
 int solve(int n, int m, int k, vector<int>& nums1, vector<int>& nums2) {
     if (n > m) return solve(m, n, k, nums2, nums1);
 
-    int start = max(0, k - m), end = min(k, n);
+    int start = max(0, k - m), end = min(k, n); // since on combining both kth element would be present at kth position hence partitioning such that from left half of both array -> left half of combined has exactly k elements. Now num2 can give atmost m elements so num1 can give atleast min(0, k-m) can't be negative and max num1 can give is k to n
 
     while (start <= end) {
         int partitionX = (start + end) / 2;
