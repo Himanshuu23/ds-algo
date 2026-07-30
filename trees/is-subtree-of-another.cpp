@@ -26,7 +26,7 @@ bool isSameTree(Node* s, Node* t) {
 
 bool isSubtree(Node* root, Node* subRoot) {
     if (!root) return false;
-    if (!isSameTree(root, subRoot)) return true;
+    if (isSameTree(root, subRoot)) return true;
     return isSubtree(root->left, subRoot) || isSubtree(root->right, subRoot);
 }
 
