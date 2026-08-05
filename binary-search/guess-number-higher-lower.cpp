@@ -14,11 +14,12 @@ public:
     int guessNumber(int n) {
         int left = 0, right = n;
         while (left <= right) {
-            int middle = (left + right) / 2;
+            int middle = ((right - left) / 2) + left;
             int x = guess(middle);
             if (x == 0) return middle;
             else if (x == 1) left = middle + 1;
             else right = middle - 1;
         }
+        return -1;
     }
 };
