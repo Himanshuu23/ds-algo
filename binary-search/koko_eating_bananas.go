@@ -104,4 +104,28 @@ public:
         return answer;    
     }
 };
+
+// brute force 
+class Solution {
+public:
+    bool canEat(vector<int>& piles, int h, int speed) {
+        int hours = 0;
+        for (int p : piles) {
+            hours += (p + speed - 1) / speed;
+        }
+        return hours <= h;
+    }
+
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int answer = 0;
+        for (int i = 1; i <= *max_element(piles.begin(), piles.end()); i++) {
+            if (canEat(piles, h, i)) {
+                answer = i;
+                break;
+            }
+        }
+
+        return answer;    
+    }
+};
 */
