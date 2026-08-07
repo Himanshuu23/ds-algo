@@ -25,6 +25,8 @@ func main() {
     fmt.Println(searchRotatedArray(nums, 3))
 }
 
+// brute force -> linear search
+
 func searchRotatedArray(nums []int, target int) int {
     start, end := 0, len(nums) - 1
 
