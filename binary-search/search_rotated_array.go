@@ -42,7 +42,7 @@ func searchRotatedArray(nums []int, target int) int {
                 start = mid + 1
             }
         } else { // we're in right sorted half
-            if ((target < nums[end]) && (target > nums[mid])) { // target lies within (mid, end)
+            if ((target <= nums[end]) && (target > nums[mid])) { // target lies within (mid, end), = for end since else it would not allow to check nums[end]
                 start = mid + 1
             } else {
                 end = mid - 1 // target lies on other part
