@@ -77,3 +77,31 @@ func minEatingSpeed(piles []int, h int) int {
 
     return result
 }
+
+/*
+C++
+class Solution {
+public:
+    bool canEat(vector<int>& piles, int h, int speed) {
+        int hours = 0;
+        for (int p : piles) {
+            hours += (p + speed - 1) / speed;
+        }
+        return hours <= h;
+    }
+
+    int minEatingSpeed(vector<int>& piles, int h) {
+        int start = 1, end = *max_element(piles.begin(), piles.end());
+        int answer = 0;
+        while (start <= end) {
+            int middle = (start + end) / 2;
+            if (canEat(piles, h, middle)) {
+                answer = middle;
+                end = middle - 1;
+            } else start = middle + 1;
+        }
+
+        return answer;    
+    }
+};
+*/
