@@ -1,6 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+Problem StatementGiven the head of a singly linked list containing an even number of nodes, pair the $i^{\text{th}}$ node (0-indexed) with the $(n - 1 - i)^{\text{th}}$ node. The sum of a pair is the sum of the values of the two nodes. Return the maximum pair sum among all pairs.Constraint: Must be solved in $\mathcal{O}(1)$ auxiliary space.Sample CaseInput: head = [1, 2, 1, 1, 8, 4]Pairs: $(1, 4) \rightarrow 5$, $(2, 8) \rightarrow 10$, $(1, 1) \rightarrow 2$Output: 10
+https://leetcode.com/discuss/post/6225872/amazon-oa-questions-2025-sde2-by-anonymo-qrs8/
+*/
+
 class Node {
 	public:
 	int value;
