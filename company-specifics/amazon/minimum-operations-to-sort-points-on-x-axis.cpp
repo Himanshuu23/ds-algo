@@ -1,6 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+There are $n$ points on an X-axis. The $i^{\text{th}}$ point initially resides at position $i$ (0-indexed) and has a weight weight[i] and a step size dist[i].In a single operation, you can move the $i^{\text{th}}$ point to the right by its step distance (position[i] = position[i] + dist[i]).Find the minimum total operations required so that the final positions of the points are strictly increasing when ordered by their weights (i.e., a point with a smaller weight must end up at a strictly smaller X-position than a point with a larger weight).Sample CasesSample Case 1Input: weight = [3, 6, 5, 2], dist = [4, 3, 2, 1]Output: 5Sample Case 2Input: weight = [2, 4, 3, 1], dist = [2, 6, 3, 5]Output: 4
+Link : https://leetcode.com/discuss/post/6225872/amazon-oa-questions-2025-sde2-by-anonymo-qrs8/
+*/
+
 // greedy - place the smallest weight first - coz after placing it we don't have to care about it just next elements
 // O(nlogn + total_operations), O(n)
 int brute_force(int n, vector<int>& weights, vector<int>& distances) {
