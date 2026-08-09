@@ -16,6 +16,29 @@ class node {
     }
 };
 
+// O(L), O(1), L -> lenth of the linked list
+node* solve2(node* head, int n) {
+    node* dummy = new node(-1);
+    dummy->next = head;
+    node* current = head;
+    int length = 0;
+    while (current) {
+        current = current->next;
+        ++length;
+    }
+
+    length -= n;
+    current = dummy; // handles when head is to be deleted
+    while (length-- && current) {
+        current = current->next;
+    }
+    node* toDelete = current->next;
+    current->next = toDelete->next;
+    delete toDelete;
+    return dummy->next;
+}
+
+// O(L), O(1), L -> lenth of the linked list - better since single pass
 void solve(node* &head, int n) {
     node* dummy = new node(0);
     dummy->next = head;
