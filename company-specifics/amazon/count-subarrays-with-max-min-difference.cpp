@@ -10,7 +10,7 @@ Link - https://leetcode.com/discuss/post/2180363/amazon-oa-by-anonymous_user-xrn
 long long solve(vector<int>& v, int k) {
     deque<int> min_q, max_q;
     int left = 0;
-    long long answer = 0;
+    long long count = 0;
     for (int right = 0; right < v.size(); right++) {
         while (!min_q.empty() && v[min_q.back()] >= v[right]) {
             min_q.pop_back();
@@ -26,10 +26,10 @@ long long solve(vector<int>& v, int k) {
             if (min_q.front() < left) min_q.pop_front();
         }
 
-        answer += (right - left + 1);
+        count += (right - left + 1);
     }
 
-    return answer;
+    return count;
 }
 
 int main() {
