@@ -17,7 +17,7 @@ Free from 6 to 10 (between 2nd & 3rd meeting)
 Link : https://leetcode.com/discuss/post/6333650/amazon-oa-experience-sde1-seattle-by-ano-mnny/
 */
 
-// O(nlogn), O(n)
+// O(nlogn), O(1) - no auxillary
 vector<pair<int, int>> solve(int start, int end, vector<pair<int, int>>& meets) {
     sort(meets.begin(), meets.end());
     vector<pair<int, int>> free;
