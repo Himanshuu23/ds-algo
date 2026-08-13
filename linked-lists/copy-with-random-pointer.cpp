@@ -19,30 +19,31 @@ class node {
 };
 
 
-node* copy(node* head) { // simpler approach using hash map
-    node* temp = head;
+// O(N), O(N) - using hashmap
+node* copy(node* head) {
+    if (!head) return nullptr;
+
     unordered_map<node*, node*> mp;
+    node* temp = head;
     while (temp) {
         mp[temp] = new node(temp->data);
         temp = temp->next;
     }
     temp = head;
-    node* newHead = mp[temp], *dummy = new node(-1);
-    dummy->next = mp[temp];
     while (temp) {
-        newHead->next = temp->next ? mp[temp->next] : nullptr; // to avoid inserting NULL (last node into map) - works but garbage
-        newHead->random = temp->random ? mp[temp->random] : nullptr;
+        mp[temp]->next = mp[temp->next];
+        mp[temp]->random = mp[temp->random];
         temp = temp->next;
-        newHead = newHead->next;
     }
 
-    return dummy->next;
+    return mp[head];
 }
 
 
 node* solve(node* &head) {
     if (!head) return nullptr;
 
+    // making A->B->C to A->A'->B->B'->C->C'
     node* curr = head;
     while(curr) {
         node* copy = new node(curr->data);
@@ -57,6 +58,7 @@ node* solve(node* &head) {
         curr = curr->next->next;
     }
 
+    // getting back cloned nodes
     curr = head;
     node* newhead = head->next;
     while(curr) {
