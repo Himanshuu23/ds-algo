@@ -6,7 +6,10 @@ Given an integer $N$ ($1 \le N \le 10^5$), determine the number of distinct ways
 Link - https://www.geeksforgeeks.org/interview-experiences/amazon-interview-experience-6-months-intern-for-sde-1/
 */
 
+// if problem was not perfect powers but can be any as in the geeks for geeks link given and base > 1 and powers > 0 then just base would go from 2 to <= MAXN and value initialized with value = base O(N^2)
+
 // precompute all possible powers where base >= 2 and exp >= 2 and coin knapsack dp on those so there sum is N
+// O(K*N) where K is around 340 (powers less than 10^5)
 const int MOD = 1e9 + 7;
 const int MAXN = 100000;
 vector<int> dp(MAXN + 1, 0);
