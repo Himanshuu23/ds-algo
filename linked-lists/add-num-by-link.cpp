@@ -16,6 +16,8 @@ class node {
     }
 };
 
+// length of list 1 -> n, list2 -> m
+// O(max(m, n)), O(max(m, n)) - for the result, else O(1)
 node* solve(node* head1, node* head2) {
     node* dummy = new node(0);
     node* temp = dummy;
