@@ -16,6 +16,7 @@ class node {
     }
 };
 
+// just like a race -> if A runs at 4km/hr and B runs at 2km/hr so when A reaches the end means B is at the middle of the track
 int middle(node* &head) {
     node* ptr1 = head;
     node* ptr2 = head;
