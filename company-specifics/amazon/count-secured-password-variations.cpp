@@ -12,7 +12,7 @@ The valid greater subsequences are "aba", "b", and "ba".
 Link - https://leetcode.com/discuss/post/6331313/amazon-oa-2025-sde-by-anonymous_user-eplv/
 */
 
-// first thing to notice is value of length of s and t combined are 10 power 7 means we can do double loop - solution is dp we have dp[i][j] where state represents dp[i][j] = total subsequences of s starting from index i lexicographically greater than subsequence of t starting from j and hence we start from last character and build to the top - using the fact that if some character is greater than t at the start then we don't need to check rest of the characters at the end
+// first thing to notice is value of length of s and t combined are 10 power 7 means we can do double loop - solution is dp we have dp[i][j] where state represents dp[i][j] = total subsequences of s remaining after index i lexicographically greater than subsequence of t starting from j and hence we start from last character and build to the top - using the fact that if some character is greater than t at the start then we don't need to check rest of the characters at the end
 // O(|s||t|), O(|s||t|)
 long long findLexicographicallyGreater(const string& s, const string& t) {
     int m = s.size(), n = t.size();
