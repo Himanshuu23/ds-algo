@@ -24,13 +24,10 @@ class DSU {
         vector<int> parent, _rank;
         int components;
     public:
-        DSU (int n) {
-            parent.resize(n);
+        DSU (int n) : parent(n), _rank(n, 0), components(n) {
             for (int i = 0; i < n; i++) {
                 parent[i] = i;
             }
-            _rank.assign(n, 0);
-            components = n;
         }
 
         int find(int x) {
