@@ -1,6 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// bfs -> to find the shortest distance, visited[i][j] = maximum remaining k seen so far at (i, j)
+// manhattan distance = |x1 - x2| + |y1 - y2| now since we can move horizontally and vertically least moves required this way would be m + n but since indexing is 0 to m - 1 and 0 to n - 1 so we have m + n - 2 so if we have enough k to move this way then this is shortest possible path either way.
+// Visit normally using bfs storing {i, j, remaining_k}, If we revisit the path (noting that bfs always provides shortest paths only first way, means earlier path had insufficient k's remaining so we revisit that path again only if we have more remaining_k than earlier else we fail either way coz it would be worse path than before + insufficient k_remaining
+// O(m*n*k), O(m*n)
 class Solution {
 public:
     int shortestPath(vector<vector<int>>& grid, int k) {
