@@ -24,7 +24,7 @@ Example
 
 Edges: 4–1, 4–5, 1–2, 1–3, 5–(-6)
 Best subset: {4, 2, 3} — 4 and 1 aren't both selected, and 2/3's parent (1) isn't selected either, so no adjacent pair is active. 5 and -6 are both skipped since -6 is negative and not worth activating along with 5 alone being suboptimal here.
-Output: 9
+Output: 10
 */
 
 // we have two choices -> take the current root, or skip it, if we take current root then we have to skip child, elsewise if we skip the root then we have two choices either take the child or skip it
