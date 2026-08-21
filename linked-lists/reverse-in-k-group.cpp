@@ -16,20 +16,49 @@ class node {
     }
 };
 
+// O(n), O(n/k)
+class Solution {
+public:
+    node* reverseKGroup(node* head, int k) {
+        node* current = head;
+        int group = 0;
+        while (current != nullptr && group < k) {
+            current = current->next;
+            group++;
+        }
+
+        if (group == k) {
+            current = reverseKGroup(current, k);
+            // same as reversing the list now just current = head and previous = current
+            while (group--) {
+                node* next = head->next;
+                head->next = current;
+                current = head;
+                head = next;
+            }
+
+            head = current;
+        }
+
+        return head;
+    }
+};
+
+// O(n), O(1)
 node* reverseKGroup(node* head, int k) {
     if (!head || k == 1) return head;
 
-    node dummy(0);
+    node dummy(0); // to handle edge cases
     dummy.next = head;
-    node* prev = &dummy;
+    node* prev = &dummy; // points to last reversed's tail so we can combine with next parts head
 
     while (true) {
         node* curr = prev;
         for (int i = 0; i < k && curr; ++i) curr = curr->next;
         if (!curr) break;
 
-        node* tail = prev->next;
-        node* next = curr->next;
+        node* tail = prev->next; // points to node that becomes tail of current group
+        node* next = curr->next; // points to next node of this group - to connect new tail with that
 
         node* p = tail;
         node* q = p->next;
@@ -41,9 +70,9 @@ node* reverseKGroup(node* head, int k) {
             q = temp;
         }
 
-        prev->next = curr;
-        tail->next = next;
-        prev = tail;
+        prev->next = curr; // connecting new tail with next node
+        tail->next = next; // connecting previous group's tail to new head
+        prev = tail; // updating tail to head of recently reversed node
     }
 
     return dummy.next;
