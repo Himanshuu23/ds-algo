@@ -2,82 +2,119 @@
     author: Himanshuu23
 */
 #include <bits/stdc++.h>
-#include <queue>
 using namespace std;
 typedef long long ll;
 
-class node {
-public:
-    int data;
-    node* next;
+class ListNode {
+    public:
+        int value;
+        ListNode* next;
 
-    node(int value) {
-        data = value;
-        next = NULL;
-    }
-};
-
-struct compare {
-    bool operator()(node* a, node* b) {
-        return a->data > b->data;
-    }
-};
-
-node* solve(vector<node*> lists) {
-    priority_queue<node*, vector<node*>, compare> minHeap;
-
-    for (auto list : lists) {
-        if (list) minHeap.push(list);
-    }
-
-    node* dummy = new node(0);
-    node* tail = dummy;
-
-    while (!minHeap.empty()) {
-        node* smallest = minHeap.top();
-        minHeap.pop();
-
-        tail->next = smallest;
-        tail = tail->next;
-
-        if (smallest->next) minHeap.push(smallest->next);
-    }
-
-    return dummy->next;
-}
-
-node* mergeTwoSorted(node* &h1, node* &h2) {
-    node* dummy = new node(0);
-    node* tail = dummy;
-
-    while (h1 && h2) {
-        if (h1->data < h2->data) {
-            tail->next = h1;
-            h1 = h1->next;
-        } else {
-            tail->next = h2;
-            h2 = h2->next;
+        ListNode(int value) {
+            this->value = value;
+            next = NULL;
         }
-        tail = tail->next;
+};
+
+// brute force: merge all together and sort - nlogn 
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        vector<int> nodes;
+        for (ListNode* lst : lists) {
+            while (lst) {
+                nodes.push_back(lst->value);
+                lst = lst->next;
+            }
+        }
+        sort(nodes.begin(), nodes.end());
+        ListNode* dummy = new ListNode(0);
+        ListNode* current = dummy;
+        for (int node : nodes) {
+            current->next = new ListNode(node);
+            current = current->next;
+        }
+        return dummy->next;
+    }
+};
+
+// using min heap - nlogk where k is total number of lists, O(k)
+class Solution2 {
+    struct compare {
+        bool operator() (ListNode* a, ListNode* b) {
+            return a->value > b->value;
+        }
+    };
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        priority_queue<ListNode*, vector<ListNode*>, compare> minHeap;
+
+        for (auto lst : lists) {
+            if (lst) {
+                minHeap.push(lst);
+            }
+        }
+
+        ListNode* dummy = new ListNode(0);
+        ListNode* tail = dummy;
+
+        while (!minHeap.empty()) {
+            ListNode* smallest = minHeap.top();
+            minHeap.pop();
+
+            tail->next = smallest;
+            tail = tail->next;
+
+            if (smallest->next) {
+                minHeap.push(smallest->next);
+            }
+        }
+
+        return dummy->next;
+    }
+};
+
+// using divide and conquer - nlogk
+class Solution3 {
+    ListNode* mergeTwoSortedLists(ListNode* &h1, ListNode* &h2) {
+        ListNode* dummy = new ListNode(-1);
+        ListNode* current = dummy;
+
+        while (h1 && h2) {
+            if (h1->value < h2->value) {
+                current->next = h1;
+                h1 = h1->next;
+            } else {
+                current->next = h2;
+                h2 = h2->next;
+            }
+            current = current->next;
+        }
+
+        current->next = h1 ? h1 : h2;
+
+        return dummy->next;              
     }
 
-    tail->next = h1 ? h1 : h2;
-    return dummy->next;
-}
+    ListNode* mergeK(vector<ListNode*>& lists, int start, int end) {
+        if (start > end) return NULL;
+        if (start == end) return lists[start];
 
-node* mergeKList(vector<node*>& lists, int left, int right) {
-    if (left > right) return NULL;
-    if (left == right) return lists[left];
+        int middle = (start + end) / 2;
+        ListNode* l1 = mergeK(lists, start, middle);
+        ListNode* l2 = mergeK(lists, middle+1, end);
 
-    int mid = (left + right) / 2;
-    node* l1 = mergeKList(lists, left, mid);
-    node* l2 = mergeKList(lists, mid + 1, right);
-    return mergeTwoSorted(l1, l2);
-}
+        return mergeTwoSortedLists(l1, l2);
+    }
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        return mergeK(lists, 0, lists.size() - 1);
+    }
+};
 
-void display(node* head) {
+void display(ListNode* head) {
     while (head) {
-        cout << head->data << "->";
+        cout << head->value << "->";
         head = head->next;
     }
     cout << "NULL\n";
@@ -87,20 +124,20 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    vector<node*> lists;
+    vector<ListNode*> lists;
     int val = 0;
     long t;
     cin >> t;
 
     while (t--) {
-        node* head = new node(val++);
-        node* head1 = new node(val++);
-        node* curr = head;
-        node* curr2 = head1;
+        ListNode* head = new ListNode(val++);
+        ListNode* head1 = new ListNode(val++);
+        ListNode* curr = head;
+        ListNode* curr2 = head1;
 
         for (int i = 0; i < 2; ++i) {
-            curr->next = new node(val++);
-            curr2->next = new node(val++);
+            curr->next = new ListNode(val++);
+            curr2->next = new ListNode(val++);
             curr = curr->next;
             curr2 = curr2->next;
         }
@@ -110,7 +147,7 @@ int main() {
     }
 
     // node* sol = solve(lists);
-    node* sol2 = mergeKList(lists, 0, lists.size() - 1);
+    ListNode* sol2 = mergeKList(lists, 0, lists.size() - 1);
     //display(sol);
     display(sol2);
     return 0;
