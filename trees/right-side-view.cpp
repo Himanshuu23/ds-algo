@@ -14,6 +14,7 @@ public:
     Node (int val) : data(val), left(nullptr), right(nullptr) {}
 };
 
+// bfs - O(n), O(n)
 vector<int> solve(Node* root) {
     vector<int> ans;
     if (!root) return ans;
@@ -36,6 +37,29 @@ vector<int> solve(Node* root) {
 
     return ans;
 }
+
+// dfs - O(n), O(n)
+class Solution {
+public:
+    vector<int> result;
+    void dfs(Node* node, int depth) {
+        if (!node) return;
+
+        // first time visiting a depth
+        if (result.size() == depth) {
+            result.push_back(node->data);
+        }
+
+        result[depth] = node->data;
+        dfs(node->left, depth + 1);
+        dfs(node->right, depth + 1);
+    }
+
+    vector<int> rightSideView(Node* root) {
+        dfs(root, 0);
+        return result;
+    }
+};
 
 int main() {
     ios::sync_with_stdio(false);
