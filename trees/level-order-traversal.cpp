@@ -17,10 +17,10 @@ public:
     }
 };
 
-queue<Node*> q;
-
+// using bfs - O(n), O(n)
 vector<vector<int>> solve(Node* root) {
     vector<vector<int>> ans;
+    queue<Node*> q;
     q.push(root);
     
     while (!q.empty()) {
@@ -37,6 +37,29 @@ vector<vector<int>> solve(Node* root) {
     
     return ans;
 }
+
+// dfs - O(n), O(n)
+class Solution {
+public:
+    vector<vector<int>> result;
+
+    void dfs(Node* node, int depth) {
+        if (!node) return;
+
+        // if first time visiting a depth make an array for that level
+        if (result.size() == depth) {
+            result.push_back(vector<int>());
+        }
+
+        result[depth].push_back(node->data);
+        dfs(node->left, depth + 1);
+        dfs(node->right, depth + 1);
+    }
+    vector<vector<int>> levelOrder(Node* root) {
+        dfs(root, 0);
+        return result;
+    }
+};
 
 int main() {
     ios::sync_with_stdio(false);
