@@ -84,7 +84,7 @@ public:
             }
         } else {
             // Node with two children
-            TreeNode* par = nullptr; // parent of right subtree's min node -> next candidate after current is deleted -> min node in its right subtree
+            TreeNode* par = nullptr; // parent of right subtree's min node -> next candidate after current is deleted -> min node in its right subtree - inorder successor
 
             TreeNode* toDelete = current;
             current = current->right;
@@ -93,7 +93,7 @@ public:
                 current = current->left;
             }
 
-            if (par) { // if there was a left traversal
+            if (par) { // if there was a left traversal - moving that inorder successor to toDelete's position
                 par->left = current->right;
                 current->right = toDelete->right;
             }
@@ -101,6 +101,7 @@ public:
 
             if (!parent) return current; // if deleting root
 
+            // if not deleting root then connecting back tree
             if (parent->left == toDelete) {
                 parent->left = current;
             } else {
