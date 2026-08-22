@@ -41,13 +41,16 @@ Node* findMin(Node* root) {
     return root;
 }
 
+// O(h), O(h)
 Node* deleteNode(Node* root, int val) {
     if (!root) return nullptr;
 
+    // finding the node to be deleted
     if (val < root->data) root->left = deleteNode(root->left, val);
     else if (val > root->data) root->right = deleteNode(root->right, val);
     else {
         // found the node to be deleted
+        // if node has single child
         if (!root->left) {
             Node* temp = root->right;
             delete root;
@@ -58,7 +61,7 @@ Node* deleteNode(Node* root, int val) {
             return temp;
         }
 
-        // node with 2 children
+        // node with 2 children + connecting the tree after deletion
         Node* temp = findMin(root->right);
         root->data = temp->data;
         root->right = deleteNode(root->right, temp->data);
