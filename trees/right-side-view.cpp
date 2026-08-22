@@ -38,7 +38,7 @@ vector<int> solve(Node* root) {
     return ans;
 }
 
-// dfs - O(n), O(n)
+// dfs - O(n), O(h) - so if tree skewed then h = n O(n) worse case space complexity
 class Solution {
 public:
     vector<int> result;
