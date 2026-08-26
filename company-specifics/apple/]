@@ -1,0 +1,12 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+/*
+You control a mechanical claw moving left and right across $N$ stacks of boxes.Goal: Distribute all boxes as evenly as possible from left to right.State Parameters:clawPos: Current index of the claw ($0$-indexed).boxes: Array of integers representing the number of boxes in each stack.boxInClaw: Boolean indicating if the claw is currently carrying a box.Valid Return Commands: "LEFT", "RIGHT", "PICK", or "PLACE".
+*/
+
+string solve(int clawPos, vector<int>& boxes, 
+
+int main() {
+    return 0;
+}
