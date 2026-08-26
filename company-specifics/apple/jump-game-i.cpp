@@ -10,6 +10,10 @@ Iterate through the array index by index.
 If you ever reach an index i that is greater than maxReach, it means you've hit a "dead end" zero and cannot proceed further — return false.
 Otherwise, update maxReach to max(maxReach, i + nums[i]).
 If maxReach reaches or exceeds the last index, return true.
+maxReach -> maximum stamina - furthes index we can currently walk to. As we walk, we extend the stamina using the jump value at current spot => nums[i] + i
+(i) check for dead ends: if i > maxReach means we have walked past our max stamina limit - we can't do anything stuck return false
+(ii) updating max point we can go to
+(iii) if in between we find we can reach then its guranteed to reach n - 1 return true early
 O(n), O(1)
 */
 
