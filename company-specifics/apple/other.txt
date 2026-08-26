@@ -1,0 +1,3 @@
+CS fundamentals (OS, DBMS, CN, OOPs)
+role specific topics
+projects
