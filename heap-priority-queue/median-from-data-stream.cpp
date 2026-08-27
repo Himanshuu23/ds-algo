@@ -28,29 +28,36 @@ public:
 
 // maintaining minHeap -> stores right half of sorted array with smallest element on the top, maxheap - stores the left half of the sorted array and top is the largest in that. Now if n is odd then median is top of maxHeap else avarage of top of both hence O(logn), O(n)
 // Difference of total elements in each must be atmost 1
-class Stream{
-    priority_queue<int> mxh;
-    priority_queue<int, vector<int>, greater<int>> mnh;
-
+class MedianFinder2 {
+    priority_queue<int> maxHeap;
+    priority_queue<int, vector<int>, greater<int>> minHeap;
 public:
-    // if maxHeap is not empty and incoming value is smaller than smallest element in maxHeap then insert into maxHeap. Otherwise insert into minHeap. Now rebalancing, if one heap becomes larger than the other by more than one, move the top element to other heap
-    void addNum(int value) {
-        if (mxh.empty() || value <= mxh.top()) mxh.push(value);
-        else mnh.push(value);
+    MedianFinder2() {}
+        // if maxHeap is not empty and incoming value is smaller than smallest element in maxHeap then insert into maxHeap. Otherwise insert into minHeap. Now rebalancing, if one heap becomes larger than the other by more than one, move the top element to other heap
+    void addNum(int num) {
+        if (maxHeap.empty() || num <= maxHeap.top()) {
+            maxHeap.push(num);
+        } else {
+            minHeap.push(num);
+        }
 
-        if (mxh.size() > mnh.size() + 1) {
-            mnh.push(mxh.top());
-            mxh.pop();
-        } else if (mnh.size() > mxh.size() + 1) {
-            mxh.push(mnh.top());
-            mnh.pop();
+        if (maxHeap.size() > minHeap.size() + 1) {
+            minHeap.push(maxHeap.top());
+            maxHeap.pop();
+        } else if (minHeap.size() > maxHeap.size() + 1) {
+            maxHeap.push(minHeap.top());
+            minHeap.pop();
         }
     }
-
-    // if both heap have same number of elements - average of their tops, else top of heap with more elements
-    double getMedian() {
-        int mx = mxh.size(), mn = mnh.size();
-        return ((mx + mn) % 2 == 0) ? (mxh.top() + mnh.top()) / 2.0 : (mx > mn ) ? mnh.top() : mxh.top();
+    
+        // if both heap have same number of elements - average of their tops, else top of heap with more elements
+    double findMedian() {
+        int m = maxHeap.size(), n = minHeap.size();
+        if (m == n) {
+            return (maxHeap.top() + minHeap.top()) / 2.0;
+        } else {
+            return (m > n) ? maxHeap.top() : minHeap.top();
+        }
     }
 };
 
