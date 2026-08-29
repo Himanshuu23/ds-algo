@@ -53,7 +53,7 @@ public:
         vector<vector<string>> result(n+1);
         result[0] = {""};
 
-        for (int k = 0; k <= n; k++) {
+        for (int k = 0; k <= n; k++) { // we can also start with k = 1 coz k = 0 means no pairs we have already calculated that it doesn't even runs
             for (int i = 0; i < k; i++) {
                 for (const string& left : result[i]) {
                     for (const string& right : result[k-i-1]) {
