@@ -28,13 +28,13 @@ void solve(int row, int n, vector<string>& board, vector<bool>& cols,
     }
 }
 
-// another solution
+// brute force - O(n! * n^2), O(n^2) - since for each row we have n choices to place the queens so overall n! and n^2 for checking if we can place
 bool canPlace(int i, int j, vector<vector<char>>& answer) {
     for (int row = 0; row < answer.size(); row++) {
         for (int col = 0; col < answer[0].size(); col++) {
             if (answer[row][col] == 'Q') {
                 if (col == j) return false;
-                if (abs(row-i) == abs(col-j)) return false; // same diagonals check
+                if (abs(row-i) == abs(col-j)) return false; // same diagonals check - since for a diagonal (row_index + col_index = n) remains constant
             }
         }
     }
