@@ -1,86 +1,188 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-class TrieNode {
-    public:
-    unordered_map<char, TrieNode*> mp;
+// brute force: using recursion - from each box in the grid - trying to find the word in all four directions
+// time complexity - O(w * m * n * 4 * 3^(t - 1)) - w are the total words, m -> rows, n -> cols, t -> max length of a word. Now for each word -> max recursion calls would be 't' -> length deep. Now suppose we choose some character then we mark that cell as visited means for the next character we cannot go in that direction hence only for 1st character we have four directions to explore while for the remaining (t-1) we have 3 directions to explore.
+class Solution {
+public:
+    int ROWS, COLS;
+
+    bool dfs(vector<vector<char>>& board, string& word, int r, int c, int i) {
+        if (i == word.length()) {
+            return true;
+        }
+
+        if (r >= ROWS || r < 0 || c >= COLS || c < 0 || board[r][c] == '#' || board[r][c] != word[i]) {
+            return false;
+        }
+
+        board[r][c] = '#';
+        bool result = dfs(board, word, r + 1, c, i + 1) || dfs(board, word, r - 1, c, i + 1) || dfs(board, word, r, c + 1, i + 1) || dfs(board, word, r, c - 1, i + 1);
+        board[r][c] = word[i];
+
+        return result;
+    }
+
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        ROWS = board.size();
+        COLS = board[0].size();
+
+        vector<string> result;
+
+        for (string word : words) {
+            bool found = false;
+            for (int i = 0; i < ROWS && !found; i++) {
+                for (int j = 0; j < COLS && !found; j++) {
+                    if (board[i][j] != word[0]) continue;
+                    if (dfs(board, word, i, j, 0)) {
+                        result.push_back(word);
+                        found = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+};
+
+// optimization: instead of traversing each word and doing same dfs every time which is repeating - searching all words together using trie -> O(m * n * 4 * 3^(t-1) + s), O(t)
+struct TrieNode {
+    unordered_map<char, TrieNode*> children;
     bool endOfWord = false;
 };
 
 class Trie {
     public:
-    TrieNode* root;
+        TrieNode* root;
+
+        Trie() {
+            root = new TrieNode();
+        }
+
+        void addWord(const string& word) {
+            TrieNode* current = root;
+
+            for (char c : word) {
+                if (current->children.find(c) == current->children.end()) {
+                    current->children[c] = new TrieNode();
+                }
+                current = current->children[c];
+            }
+            current->endOfWord = true;
+        }
+};
+
+class Solution2 {
+private:
+    int ROWS, COLS;
+    unordered_set<string> result; // to avoid pushing the same word again
+
+    void dfs(vector<vector<char>>& board, string& word, int r, int c, TrieNode* node) {
+        if (r < 0 || r >= ROWS || c < 0 || c >= COLS || board[r][c] == '#' || !node->children.count(board[r][c])) {
+            return;
+        }
+
+        word += board[r][c];
+        node = node->children[board[r][c]];
+        board[r][c] = '#';
     
-    Trie() {
-        root = new TrieNode();
-    }
-
-    void insert(const string &word) {
-        TrieNode* current = root;
-        for (auto ch : word) {
-            if (current->mp.find(ch) == current->mp.end()) current->mp[ch] = new TrieNode();
-            current = current->mp[ch];
-        }
-        current->endOfWord = true;
-    }
-
-    TrieNode* find(char character, TrieNode* parent) {
-        return (parent->mp.find(character) != parent->mp.end()) ? parent->mp[character] : nullptr;
-    }
-
-    void dfs(int i, int j, int M, int N, TrieNode* node, vector<vector<char>> &grid, string &current, vector<vector<int>> &visited, vector<string> &result) {
-        if (i < 0 || j < 0 || i >= M || j >= N) return;
-        if (visited[i][j]) return;
-        
-        char character = grid[i][j];
-        TrieNode* child = find(character, node);
-        if (!child) return;
-
-        current.push_back(character);
-        if (child->endOfWord) {
-            result.push_back(current);
-            child->endOfWord = false;
+        if (node->endOfWord) {
+            result.insert(word);
         }
 
-        visited[i][j] = 1;
-        
-        dfs(i, j-1, M, N, child, grid, current, visited, result);
-        dfs(i-1, j, M, N, child, grid, current, visited, result);
-        dfs(i, j+1, M, N, child, grid, current, visited, result);
-        dfs(i+1, j, M, N, child, grid, current, visited, result);
+        dfs(board, word, r + 1, c, node);
+        dfs(board, word, r - 1, c, node);
+        dfs(board, word, r, c + 1, node);
+        dfs(board, word, r, c - 1, node);
 
-        visited[i][j] = 0;
-        current.pop_back();
+        board[r][c] = word.back();
+        word.pop_back();
+    }
+public:
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        Trie trie;
+        for (const string& word : words) {
+            trie.addWord(word);
+        }
+
+        ROWS = board.size(), COLS = board[0].size();
+        
+        for (int r = 0; r < ROWS; r++) {
+            for (int c = 0; c < COLS; c++) {
+                string word = "";
+                dfs(board, word, r, c , trie.root);
+            }
+        }
+
+        return vector<string> (result.begin(), result.end());
     }
 };
 
-int main() {
-    Trie trie;
-    vector<string> words = {"oath", "pea", "eat", "rain"};
+// more optimization/pruning: for each trie node storing refs: that is how many words down in it form a word, so we don't explore nodes that we have already explored all the nodes for -> its refs would become 0 -> node is dead we don't explore it unnecessarily
+struct TrieNode2 {
+    unordered_map<char, TrieNode2*> children;
+    string word = ""; // Store the complete word at the end node
+};
 
-    for (auto &w : words)
-        trie.insert(w);
-
-    vector<vector<char>> grid = {
-        {'o','a','a','n'},
-        {'e','t','a','e'},
-        {'i','h','k','r'},
-        {'i','f','l','v'}
-    };
-
-    int M = grid.size(), N = grid[0].size();
-    vector<vector<int>> visited(M, vector<int>(N, 0));
+class Solution3 {
+private:
+    int ROWS, COLS;
     vector<string> result;
-    string current = "";
 
-    for (int i = 0; i < M; i++) {
-        for (int j = 0; j < N; j++) {
-            trie.dfs(i, j, M, N, trie.root, grid, current, visited, result);
+    void dfs(vector<vector<char>>& board, int r, int c, TrieNode2* node) {
+        char ch = board[r][c];
+        
+        if (ch == '#' || !node->children.count(ch)) return;
+
+        TrieNode2* curr = node->children[ch];
+
+        if (!curr->word.empty()) {
+            result.push_back(curr->word);
+            curr->word = ""; // Prevent duplicate additions
+        }
+
+        board[r][c] = '#';
+
+        if (r > 0) dfs(board, r - 1, c, curr);
+        if (r < ROWS - 1) dfs(board, r + 1, c, curr);
+        if (c > 0) dfs(board, r, c - 1, curr);
+        if (c < COLS - 1) dfs(board, r, c + 1, curr);
+
+        // Backtrack cell state
+        board[r][c] = ch;
+
+        // Leaf Node Pruning (Safe Trie Optimization)
+        if (curr->children.empty()) {
+            delete curr;
+            node->children.erase(ch);
         }
     }
 
-    for (auto &s : result)
-        cout << s << endl;
+public:
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        TrieNode2* root = new TrieNode2();
+        for (const string& w : words) {
+            TrieNode2* curr = root;
+            for (char ch : w) {
+                if (!curr->children.count(ch)) {
+                    curr->children[ch] = new TrieNode2();
+                }
+                curr = curr->children[ch];
+            }
+            curr->word = w;
+        }
 
-    return 0;
-}
+        ROWS = board.size();
+        COLS = board[0].size();
+
+        for (int r = 0; r < ROWS; r++) {
+            for (int c = 0; c < COLS; c++) {
+                dfs(board, r, c, root);
+            }
+        }
+
+        return result;
+    }
+};
