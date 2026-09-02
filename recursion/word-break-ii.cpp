@@ -36,7 +36,6 @@ private:
 
         word += s[i];
         backtrack(i + 1, s, word, sentence);
-        word.pop_back();
     }
 
 public:
