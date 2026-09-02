@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// O(n) for each function call, O(t) space where t -> number of trie nodes created
 class TrieNode {
     public:
     unordered_map<char, TrieNode*> mp;
