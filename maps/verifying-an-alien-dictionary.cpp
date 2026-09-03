@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-// using sorting - O(n * mlogn), O(m*n)
+// using sorting - O(m * nlogm), O(m*n) -> where m -> number of words, n -> average length of each word
 class Solution {
 public:
     bool isAlienSorted(vector<string>& words, string order) {
@@ -25,7 +25,7 @@ public:
     }
 };
 
-// O(m*n), O(1) where m -> number of words, n -> average length of each word
+// O(m*n), O(1) 
 class Solution2 {
 public:
     bool isAlienSorted(vector<string>& words, string order) {
