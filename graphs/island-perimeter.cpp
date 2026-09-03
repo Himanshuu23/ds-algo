@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// if there is a land near a land then it removes its side for calculation for its area - hence non land cells adds up to area while land ones don't
 // using dfs - O(n*m), O(n*m)
 class Solution {
 private:
