@@ -3,74 +3,67 @@ using namespace std;
 
 class Node {
     public:
-        int value;
-        vector<Node*> neighbours;
+        int val;
+        vector<Node*> neighbors;
 
         Node (int value) {
-            this->value = value;
+            val = value;
         }
 };
 
-unordered_map<Node*, Node*> cloned;
-Node* clone(Node* node) {
-    if (!node) return nullptr;
-    if (cloned.count(node)) return cloned[node];
+// using dfs - O(V + E), O(V)
+class Solution {
+private:
+    map<Node*, Node*> oldToNew;
 
-    Node* copy = new Node(node->value);
-    cloned[node] = copy;
+    Node* dfs(Node* node) {
+        if (node == nullptr) {
+            return nullptr;
+        }
 
-    for (Node* neighbour : node->neighbours) {
-        copy->neighbours.push_back(clone(neighbour));
+        if (oldToNew.count(node)) {
+            return oldToNew[node];
+        }
+
+        Node* copy = new Node(node->val);
+        oldToNew[node] = copy;
+
+        for (Node* neighbor : node->neighbors) {
+            copy->neighbors.push_back(dfs(neighbor));
+        }
+
+        return copy;
     }
+public:
+    Node* cloneGraph(Node* node) {
+        return dfs(node);
+    }
+};
 
-    return copy;
-}
+// using bfs - O(V + E), O(V)
+class Solution2 {
+public:
+    Node* cloneGraph(Node* node) {
+        if (!node) return nullptr;
 
-// printing bfs of cloned graph
-void bfs(Node* start) {
-    unordered_set<Node*> visited;
-    queue<Node*> q;
-    q.push(start);
-    visited.insert(start);
+        map<Node*, Node*> oldToNew;
+        queue<Node*> q;
+        oldToNew[node] = new Node(node->val);
+        q.push(node);
 
-    while (!q.empty()) {
-        Node* node = q.front(); q.pop();
-        cout << node->value << " -> ";
-        for (Node* neighbour : node->neighbours) {
-            cout << neighbour->value << " ";
-            if (!visited.count(neighbour)) {
-                q.push(neighbour);
-                visited.insert(neighbour);
+        while (!q.empty()) {
+            Node* current = q.front();
+            q.pop();
+
+            for (Node* neighbor : current->neighbors) {
+                if (oldToNew.find(neighbor) == oldToNew.end()) {
+                    oldToNew[neighbor] = new Node(neighbor->val);
+                    q.push(neighbor);
+                }
+                oldToNew[current]->neighbors.push_back(oldToNew[neighbor]);
             }
         }
-        cout << '\n';
+
+        return oldToNew[node];
     }
-}
-
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    int T; cin >> T;
-    while (T--) {
-        int n; cin >> n;
-        vector<Node*> nodes(n+1, nullptr);
-        for (int i = 1; i <= n; i++) nodes[i] = new Node(i);
-
-        // building the graph
-        for (int i = 1; i <= n; i++) {
-            Node* node = nodes[i];
-            int k; cin >> k;
-            for (int j = 0; j < k; j++) {
-                int value; cin >> value;
-                node->neighbours.push_back(nodes[value]); 
-            }
-        }
-        cloned.clear();
-        Node* copy = clone(nodes[1]);
-        bfs(copy);
-    }
-
-    return 0;
-}
-
+};
