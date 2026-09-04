@@ -156,7 +156,8 @@ public:
     }
 };
 
-// O((m*n)^2), O(m*n) - bfs without queue
+// O((m*n)^2), O(m*n) - bfs without queue - same as BFS just simulating each level in a loop and in each loop -> every minute increasing the timer. Cells with values 2 are rotten at this minute, any fresh neighbour that will rot in next minute is marked temporarily as 3. If there is no orange that would rot in this minute but fresh still exists means -1.
+// After scanning we convert back all 3s back to 2s to prepare for the next minute. 3 is marked because then we might spread newly rotted orange in this same minute only but 3 blocks that from happening and hence doesn't increases the time incorrectly
 class Solution4 {
 public:
     int orangesRotting(vector<vector<int>>& grid) {
