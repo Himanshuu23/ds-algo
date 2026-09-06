@@ -5,8 +5,51 @@
 using namespace std;
 typedef long long ll;
 
-// approach - using Kahan's Algorithm - (BFS + Topological Sort)
+// using dfs - cycle detection - O(V + E), O(V + E)
+class Solution {
+private:
+    vector<vector<int>> adj;
+    vector<bool> visited;
 
+    bool dfs(int course) {
+        if (visited[course]) {
+            return false; // cycle detected
+        }
+        if (adj[course].empty()) {
+            return true;
+        }
+
+        visited[course] = true;
+        for (int pre : adj[course]) {
+            if (!dfs(pre)) {
+                return false;
+            }
+        }
+
+        visited[course] = false;
+        adj[course] = {};
+        return true;
+    }
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        visited.resize(numCourses, false);
+        adj.resize(numCourses);
+
+        for (auto p : prerequisites) {
+            adj[p[1]].push_back(p[0]);
+        }
+
+        for (int i = 0; i < numCourses; i++) {
+            if (!dfs(i)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+};
+
+// approach - using Kahan's Algorithm - (BFS + Topological Sort) - O(V + E), O(V + E)
 bool canFinish(int numCourse, vector<vector<int>>& prereq) {
     vector<vector<int>> adj(numCourse);
     vector<int> inDegree(numCourse, 0);
