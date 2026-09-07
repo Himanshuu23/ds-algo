@@ -74,6 +74,48 @@ bool canFinish(int numCourse, vector<vector<int>>& prereq) {
     return count == numCourse;
 }
 
+// same dfs method but if we want the order as well
+class Solution2 {
+private:
+    vector<vector<int>> adj;
+    vector<int> state; // 0 = unvisited, 1 = currently processing, 2 = processed
+    vector<int> result;
+
+    bool dfs(int course) {
+        if (state[course] == 1) return false;
+        if (state[course] == 2) return true;
+
+        state[course] = 1;
+        for (int pre : adj[course]) {
+            if (!dfs(pre)) {
+                return false;
+            }
+        }
+
+        state[course] = 2;
+        result.push_back(course);
+        return true;
+    }
+public:
+    vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
+        adj.resize(numCourses);
+        state.assign(numCourses, 0);
+
+        for (auto& p : prerequisites) {
+            adj[p[1]].push_back(p[0]);
+        }
+
+        for (int i = 0; i < numCourses; i++) {
+            if (!dfs(i)) {
+                return {};
+            }
+        }
+        
+        reverse(result.begin(), result.end());
+        return result;
+    }
+};
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
