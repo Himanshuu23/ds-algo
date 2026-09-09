@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// its graph connectivity problem - if two accounts share an email, they belong to the same person and should be merged. We can model this into a graph where each nodes is email and all emails belonging to the same account are connected to each other now we just have to group each connected component together.
+// its graph connectivity problem - if two accounts share an email, they belong to the same person and should be merged. We can model this into a graph where each nodes is email and all emails belonging to the same account are connected to each other now we just have to group each connected component together. - building each maps or dsu structures takes O(n*m) and log(n*m) for sorting as well while building the final result
 // Using DFS - O((n * m)log(n * m)), O(n * m)
 class Solution {
 private:
