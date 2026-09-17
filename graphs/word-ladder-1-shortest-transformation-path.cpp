@@ -6,6 +6,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Using bfs : O(m^2 * n), O(m^2 * n)
 int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
     unordered_set<string> wordSet(wordList.begin(), wordList.end());
     if (!wordSet.count(endWord)) return 0; // End word must be in the list
