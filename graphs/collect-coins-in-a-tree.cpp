@@ -127,6 +127,8 @@ public:
     }
 };
 
+// also in the brute force approach we're counting remainingEdges += adj[i].size() means we're counting u-v twice which is correctly required while in optimized approach we start from n - 1 edges means we are counting these as single edge hence we need to explicitly multiply by 2
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
