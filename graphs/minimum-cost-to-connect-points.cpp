@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// just MST - Minimum Spanning Tree
 // using kruskal - O(n^2 logn), O(n^2)
 class DSU {
 	public:
