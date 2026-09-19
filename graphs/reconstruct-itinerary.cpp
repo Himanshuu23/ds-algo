@@ -69,6 +69,7 @@ public:
 };
 
 // iterative method for heirholzer's algorithm - same as above approach just recursion stack -> stack
+// same time complexity as above
 class Solution3 {
 public:
     vector<string> findItinerary(vector<vector<string>>& tickets) {
