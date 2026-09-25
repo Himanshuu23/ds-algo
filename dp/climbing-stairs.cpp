@@ -51,21 +51,21 @@ public:
 class Solution4 {
 public:
     int climbStairs(int n) {
-        int one = 1, two = 1; // one -> ways to reach the current step, two -> ways to reach the previous step
+        int f[] = {1, 1};
 
-        for (int i = 0; i < n - 1; i++) {
-            int temp = one;
-            one = one + two;
-            two = temp;
+        for (int i = 2; i <= n; i++) {
+            f[i % 2] = f[0] + f[1];
         }
 
-        return one;
+        return f[n % 2];
     }
 };
+
 // Using Matrix Exponentiation: O(logn), O(1)
 // Since the solution follows fibonacci sequence we can use matrix exponentiation to find the answer in logn rather than linear time
-// |1 1|
-// |1 0| squares the matrix 'n' times and [0][0] element is the answer.
+// |1 1| -> f(n) = 1*f(n-1) + 1*f(n-2)
+// |1 0| -> f(n-1) = 1*f(n-1) + 0*f(n-2)
+// squares the matrix 'n' times and [0][0] element is the answer.
 // M⁴ = (M²)² — just 2 multiplications instead of 4
 // M⁸ = (M⁴)² — just 3 multiplications instead of 8
 // M¹⁶ = (M⁸)² — just 4 multiplications instead of 16
@@ -79,8 +79,9 @@ private:
                  A[1][0] * B[0][1] + A[1][1] * B[1][1]}};
     }
 
+    // just binary exponentiation but for matrices
     vector<vector<int>> matrixPower(vector<vector<int>>& M, int p) {
-        vector<vector<int>> result = {{1, 0}, {0, 1}};
+        vector<vector<int>> result = {{1, 0}, {0, 1}}; // starting from identity matrix
         vector<vector<int>> base = M;
 
         while (p > 0) {
@@ -105,7 +106,7 @@ public:
 };
 
 // using math - using binet's formula: since fibonacci sequence can be represented in the form of two constants derived from golden ration. Compute the golden ratio φ = (1 + √5) / 2 and its conjugate ψ = (1 − √5) / 2. Climbing stairs is going from 0 start to nth stair so fib(n+1)
-// O(logn), O(1)
+// O(1), O(1)
 class Solution6 {
 public:
     int climbStairs(int n) {
