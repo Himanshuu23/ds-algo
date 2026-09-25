@@ -105,6 +105,7 @@ public:
 };
 
 // using math - using binet's formula: since fibonacci sequence can be represented in the form of two constants derived from golden ration. Compute the golden ratio φ = (1 + √5) / 2 and its conjugate ψ = (1 − √5) / 2. Climbing stairs is going from 0 start to nth stair so fib(n+1)
+// O(logn), O(1)
 class Solution6 {
 public:
     int climbStairs(int n) {
