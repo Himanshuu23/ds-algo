@@ -2,7 +2,7 @@
 using namespace std;
 
 /*
-For an array arr of length n, each element arr[i] contributes to multiple subarrays. Specifically, it appears in (i + 1) * (n - i) subarrays.
+For an array arr of length n, each element arr[i] contributes to multiple subarrays. Specifically, it appears in (i + 1) * (n - i) subarrays. Since choices for {0...i} -> i + 1 options and {i ... n - 1} -> n - i options
 */
 
 int main() {
