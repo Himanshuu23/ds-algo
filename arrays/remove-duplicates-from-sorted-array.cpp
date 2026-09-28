@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// O(n), O(1)
 class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
@@ -14,6 +15,7 @@ public:
     }
 };
 
+// O(n), O(1)
 class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
@@ -31,4 +33,18 @@ public:
 
         return w;
     }
+};
+
+// O(n), O(1)
+class Solution {
+    public:
+        int removeDuplicates(vector<int>& v) {
+            int n = v.size();
+            if (n == 0) return 0;
+            int w = 1; // last written element
+            for (int i = 1; i < n; i++) {
+                if (v[i] != v[w-1]) v[w++] = v[i]; // if previously written element not equal to the current element 
+            }
+            return w;
+        }
 };
