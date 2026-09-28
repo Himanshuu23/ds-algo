@@ -8,7 +8,7 @@ typedef long long ll;
 vector<int> solve(const vector<int>& v, int n, int k) {
     vector<int> ans;
     unordered_map<int, int>mp;
-    int curr(0), start(0), end(0);
+    int start(0), end(0);
 
     while (end < n) {
         mp[v[end]]++;
