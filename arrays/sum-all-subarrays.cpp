@@ -7,12 +7,11 @@ For an array arr of length n, each element arr[i] contributes to multiple subarr
 
 int main() {
     int n; cin >> n;
-    vector<int> arr;
+    vector<int> arr(n);
     int sum = 0;
 
     for (int i = 0; i < n; i++) {
-        int temp = 0; cin >> temp;
-        arr.push_back(temp);
+        cin >> arr[i];
     }
 
     for (int j = 0; j < n; j++) {
