@@ -6,9 +6,26 @@ using namespace std;
 typedef long long ll;
 class Solution {
 public:
-    int findGCD(int a, int b) {
+    int findGCD(int a, int b) { // euclidean algorithm - O(log(min(a, b)) - time and space, O(1) space for iterative though
         if (b == 0) return a;
-        return (a == 0 ? b : gcd(b, a % b)); 
+        return (a == 0 ? b : findGCD(b, a % b)); 
+    }
+
+    int findGCDIterative(int a, int b) {
+        while (b != 0) {
+            int r = a % b;
+            a = b;
+            b = r;
+        }
+        return a;
+    }
+
+    int findGCDIterative2(int a, int b) {
+        while (b) {
+            a %= b;
+            swap(a, b);
+        }
+        return a;
     }
 
     int solve(vector<int>& nums) {
