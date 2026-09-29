@@ -27,7 +27,26 @@ int solve(vector<int>& people, int limit, vector<bool>& used) {
     return best;
 }
 
-// O(nlogn), O(1)
+// O(n^2), O(n) - sorting and finding the best possible (heaviest) to pair with heaviest - since heaviest neet one boat either way
+int numRescueBoats(vector<int>& people, int limit) {
+    sort(people.begin(), people.end());
+    int n = people.size(), boats = 0;
+    vector<bool> used(n, false);
+    for (int i = n - 1; i >= 0; i--) {
+        if (used[i]) continue;
+        used[i] = true;
+        boats++;
+        for (int j = i - 1; i >= 0; i--) {
+            if (!used[j] && people[i] + people[j] <= limit) {
+                used[j] = true;
+                break;
+            }
+        }
+    }
+    return boats;
+}
+
+// O(nlogn), O(1) - two pointers
 class Solution {
 public:
     int numRescueBoats(vector<int>& people, int limit) {
