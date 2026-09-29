@@ -1,6 +1,55 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// brute force: trying all possible subarray and checking any of them has sum = given_sum - O(n^3), O(1)
+pair<int, int> bruteForce(vector<int>& v, int s) {
+    int n = v.size();
+    for (int i = 0; i < n; i++) {
+        for (int j = i; j < n; j++) {
+            int sum = 0;
+            for (int k = i; k <= j; k++) {
+                sum += v[k];
+            }
+            if (sum == s) {
+                return {i, j};
+            }
+        }
+    }
+    return {-1, -1};
+}
+
+// using running prefix sum: O(n^2), O(1) - removing the third loop - fix the starting position 'i' and keep adding new element using another loop - extending the array from 'i'
+pair<int, int> usingRunningPrefixSum(vector<int>& v, int s) {
+    int n = v.size();
+    for (int i = 0; i < n; i++) {
+        int sum = 0;
+        for (int j = i; j < n; j++) {
+            sum += v[j];
+            if (sum == s) {
+                return {i, j};
+            }
+        }
+    }
+    return {-1, -1};
+}
+
+// using sliding window: O(n), O(1) - works only for non-negative elements (not for negative numbers)
+pair<int, int> usingSlidingWindow(vector<int>& v, int s) {
+    int left = 0, right = 0, sum = 0;
+    while (right < v.size()) {
+        sum += v[right];
+        while (sum > s && left <= right) {
+            sum -= v[left];
+            left++;
+        }
+        if (sum == s) {
+            return {left, right};
+        }
+        right++;
+    }
+    return {-1, -1};
+}
+
 /*
 If prefix[j] - prefix[i] = sum, then the subarray from i+1 to j sums to sum.
 So we store prefix sums in a hash map as we go.
