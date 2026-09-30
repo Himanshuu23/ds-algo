@@ -2,7 +2,7 @@
 using namespace std;
 
 // on going down the column or right the row the value of elements would be in ascending order
-
+// O(rows + cols)
 int main() {
     int rows, cols; cin >> rows >> cols;
     vector<vector<int>> matrix(rows, vector<int>(cols));
