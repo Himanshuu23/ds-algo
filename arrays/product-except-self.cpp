@@ -1,13 +1,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// answer[i] = prefix[i] * suffix[i] => O(n), O(1) - excluding output array
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
-    int T;
-    cin >> T;
-    while (T--) {
+    int t;
+    cin >> t;
+    while (t--) {
 		int n; cin >> n;
 		vector<int> v(n), answer(n, 1);
 		for (int i = 0; i < n; i++) {
